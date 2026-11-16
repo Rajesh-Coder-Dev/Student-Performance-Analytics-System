@@ -400,22 +400,4 @@
 </div>
 
 
-<h2>Student Marks</h2>
-
-{% if marks %} <table border="1" cellpadding="8"> <tr> <th>Student</th> <th>Subject Code</th> <th>Subject</th> <th>Marks</th> </tr>
-
-
-    {% for mark in marks %}
-    <tr>
-        <td>{{ mark.student.name }}</td>
-        <td>{{ mark.subject.code }}</td>
-        <td>{{ mark.subject.name }}</td>
-        <td>{{ mark.marks|floatformat:2 }}</td>
-    </tr>
-    {% endfor %}
-</table>
-
-
-{% else %} <p>No marks found.</p>
-{% endif %}
-
+{% include 'partials/footer.html' %}
