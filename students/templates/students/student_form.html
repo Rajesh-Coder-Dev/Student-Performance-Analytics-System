@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .form-container {
+             max-width: 600px;
+             width: 100%;
+             box-sizing: border-box;
+             margin: 30px auto;
+             padding: 30px;
+             background: white;
+             border-radius: 10px;
+             border-top: 5px solid #1f3c88;
+             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }         
+        
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1f3c88;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .form-field {
+            margin-bottom: 18px;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background-color: #ffffff;
+            color: #333333;
+            font-size: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #1f3c88;
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.15);
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #243b64;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .save-button {
+            background: #198754;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(25, 135, 84, 0.2);
+        }
+
+        .back-button {
+            background: #6c757d;
+            color: white;
+            margin-left: 8px;        
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(108, 117, 125, 0.2);
+        }
+
+        .save-button:hover {
+            background: #146c43;
+        }
+
+        .back-button:hover {
+            background: #565e64;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .errorlist {
+            color: #dc3545;
+        }
+
+        /* Responsive Student Form */
+@media (max-width: 600px) {
+
+    body {
+        padding: 12px;
+    }
+
+    .form-container {
+        margin: 15px auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .back-button {
+        margin-left: 0;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+
+        <h1>{{ title }}</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-field">
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% for error in field.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <div class="error">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="button save-button">
+                Save Student
+            </button>
+
+            <a href="{% url 'student_list' %}"
+               class="button back-button">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            margin: 0;
+            padding: 25px;
+        }
+
+        h1 {
+            color: #1e3a8a;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #dbeafe;
+        }
+
+        h2 {
+            color: #1e3a8a;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dbeafe;
+        }
+
+        .section {
+            background-color: #ffffff;
+            padding: 25px;
+            margin: 25px auto;
+            max-width: 1100px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            box-sizing: border-box;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Tables */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+        }
+
+        th {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            padding: 13px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+       td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        td:last-child {
+            border-right: none;
+        }     
+        
+        .marks-column {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+         
+            tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .summary-card {
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+            border-radius: 7px;
+            padding: 18px;
+            overflow-wrap: anywhere;
+
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+        }        
+        .summary-label {
+            display: block;
+            color: #475569;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+        display: block;
+        color: #1e3a8a;
+        font-size: 21px;
+        font-weight: bold;
+        overflow-wrap: anywhere;
+    }
+
+    /* Result and performance status colors */
+    .status-pass {
+        color: #15803d;
+    }
+
+    .status-fail {
+        color: #dc2626;
+    }
+
+    .status-average {
+        color: #b45309;
+    }
+
+    /* Performance status card backgrounds */
+
+.performance-card.status-outstanding {
+    background-color: #dcfce7;
+    border-left-color: #15803d;
+}
+
+.performance-card.status-excellent {
+    background-color: #ecfdf5;
+    border-left-color: #059669;
+}
+
+.performance-card.status-very-good {
+    background-color: #dbeafe;
+    border-left-color: #2563eb;
+}
+
+.performance-card.status-good {
+    background-color: #e0f2fe;
+    border-left-color: #0284c7;
+}
+
+.performance-card.status-average {
+    background-color: #fef3c7;
+    border-left-color: #d97706;
+}
+
+.performance-card.status-pass {
+    background-color: #ffedd5;
+    border-left-color: #ea580c;
+}
+
+.performance-card.status-needs-improvement {
+    background-color: #fee2e2;
+    border-left-color: #dc2626;
+}
+
+    /* Highlight the final result card */
+.result-card {
+    background-color: #f0fdf4;
+    border-left-color: #15803d;
+}
+
+.result-card.result-fail {
+    background-color: #fef2f2;
+    border-left-color: #dc2626;
+}
+
+.result-card.result-no-result {
+    background-color: #fffbeb;
+    border-left-color: #d97706;
+}
+
+.result-card .summary-value {
+    font-size: 24px;
+    padding: 4px 0;
+}
+
+        /* Navigation Buttons */
+        .navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 11px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: background-color 0.2s ease,
+                        transform 0.2s ease,
+                        box-shadow 0.2s ease;
+        }        
+
+        .button:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .button:focus-visible {
+            outline: 3px solid #f59e0b;
+            outline-offset: 3px;
+        }
+
+        .secondary-button {
+            background-color: #475569;
+        }
+
+        .secondary-button:hover {
+            background-color: #334155;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 700px) {
+            body {
+                padding: 12px;
+            }
+
+            .section {
+                padding: 16px;
+                margin: 16px auto;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Student Performance System</h1>
+
+    <div class="section">
+
+        <h2>{{ student.name }} - Performance</h2>
+
+        <div class="navigation">
+            <a class="button secondary-button"
+               href="{% url 'student_list' %}">
+                ← Back to Student List
+            </a>
+
+            <a class="button"
+               href="{% url 'dashboard' %}">
+                Back to Dashboard
+            </a>
+
+            <a class="button"
+               href="{% url 'home' %}">
+                Back to Home
+            </a>
+
+            <a class="button"
+              href="{% url 'student_pdf_report' student.student_id %}"
+              style="background-color: #15803d;">
+
+               📄 Download PDF Report
+
+            </a>
+            
+        </div>
+
+    </div>
+
+
+    <!-- STUDENT INFORMATION -->
+
+    <div class="section">
+
+        <h2>Student Information</h2>
+
+        <div class="table-container">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date of Birth</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><strong>{{ student.student_id }}</strong></td>
+                         <td><strong>{{ student.name }}</strong></td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.date_of_birth }}</td>
+                        <td>{{ student.department }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUBJECT-WISE MARKS -->
+
+    <div class="section">
+
+        <h2>Subject-wise Marks</h2>
+
+        {% if marks %}
+
+            <div class="table-container">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject Code</th>
+                            <th>Subject</th>
+                            <th class="marks-column">Marks</th>
+                    </thead>
+
+                    <tbody>
+                        {% for mark in marks %}
+                        <tr>
+                            <td>{{ mark.subject.code }}</td>
+                            <td>{{ mark.subject.name }}</td>
+                            <td class="marks-column">{{ mark.marks }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <p>No marks found for this student.</p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- PERFORMANCE SUMMARY -->
+
+    <div class="section">
+
+        <h2>Performance Summary</h2>
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+                <span class="summary-label">Total Marks</span>
+                <span class="summary-value">{{ total_marks }}</span>
+            </div>
+
+            <div class="summary-card">
+                <span class="summary-label">Average Marks</span>
+                <span class="summary-value">{{ average_marks }}</span>
+            </div>
+
+            <div class="summary-card">
+                <span class="summary-label">Percentage</span>
+                <span class="summary-value">{{ percentage }}%</span>
+            </div>
+
+            <div class="summary-card">
+                <span class="summary-label">CGPA</span>
+                <span class="summary-value">{{ cgpa }}</span>
+            </div>
+
+            <div class="summary-card">
+                <span class="summary-label">Grade</span>
+                <span class="summary-value">{{ grade }}</span>
+            </div>
+
+            <div class="summary-card performance-card
+    {% if performance_status == 'Outstanding' %}
+        status-outstanding
+    {% elif performance_status == 'Excellent' %}
+        status-excellent
+    {% elif performance_status == 'Very Good' %}
+        status-very-good
+    {% elif performance_status == 'Good' %}
+        status-good
+    {% elif performance_status == 'Average' %}
+        status-average
+    {% elif performance_status == 'Pass' %}
+        status-pass
+    {% elif performance_status == 'Needs Improvement' %}
+        status-needs-improvement
+    {% endif %}">
+        <span class="summary-label">Performance Status</span>
+
+        <span class="summary-value
+          {% if performance_status == 'Excellent' %}
+            status-pass
+          {% elif performance_status == 'Average' %}
+            status-average
+         {% elif performance_status == 'Poor' %}
+            status-fail
+          {% endif %}">
+                {{ performance_status }}
+        </span>
+    </div>
+
+    <div class="summary-card result-card
+        {% if result_status == 'FAIL' %}
+            result-fail
+        {% elif result_status == 'NO RESULT' %}
+            result-no-result
+        {% endif %}">
+         <span class="summary-label">Result</span>
+
+      <span class="summary-value
+           {% if result_status == 'PASS' %}
+               status-pass
+           {% elif result_status == 'FAIL' %}
+              status-fail
+          {% else %}
+              status-average
+          {% endif %}">
+          {{ result_status }}
+         </span>
+     </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

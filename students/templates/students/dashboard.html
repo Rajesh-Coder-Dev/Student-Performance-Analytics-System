@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student Performance Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            margin: 0;
+
+            padding: 30px;
+
+            background-color: #f4f6f8;
+
+            color: #222;
+        }
+
+
+        .container {
+
+            max-width: 1200px;
+
+            margin: auto;
+        }
+
+
+        /* ==================================================
+           HEADER
+           ================================================== */
+
+        h1 {
+
+            margin-bottom: 5px;
+        }
+
+
+        .subtitle {
+
+            color: #666;
+
+            margin-bottom: 25px;
+        }
+
+
+        .nav-link {
+
+            display: inline-block;
+
+            margin-bottom: 25px;
+
+            text-decoration: none;
+
+            color: #2563eb;
+
+            font-weight: 600;
+        }
+
+
+        /* ==================================================
+           COMMON SECTION
+           ================================================== */
+
+        .section,
+        .dashboard-section {
+
+            background: white;
+
+            padding: 25px;
+
+            margin-bottom: 30px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .section h2,
+        .dashboard-section h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* ==================================================
+           SYSTEM STATISTICS
+           ================================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+        }
+
+
+    .card {
+    background: #f8f9fb;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;  
+    }
+
+    .card-title {
+    color: #334155;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    }
+
+    .card-value {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-top: 10px;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        border-color: #3b82f6;
+    }
+
+    
+        .card-title {
+
+            color: #666;
+
+            font-size: 14px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .card-value {
+
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+
+        /* ==================================================
+           OVERALL PERFORMANCE
+           ================================================== */
+
+        .performance-summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .performance-item {
+
+            background: #f8f9fb;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            border: 1px solid #e5e7eb;
+        }
+
+
+        .performance-label {
+
+            display: block;
+
+            color: #666;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .performance-value {
+
+            font-size: 22px;
+
+            font-weight: bold;
+        }
+
+
+        .grade {
+
+            font-weight: bold;
+        }
+
+
+        .performance {
+
+            font-weight: bold;
+        }
+
+
+        /* ==================================================
+           TABLE
+           ================================================== */
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+        }
+
+
+        th,
+        td {
+
+            padding: 12px;
+
+            text-align: left;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        th {
+
+            background-color: #f1f3f5;
+
+            font-weight: 600;
+        }
+
+
+        tr:hover {
+
+            background-color: #f8f9fa;
+        }
+
+
+        /* ==================================================
+           SEARCH
+           ================================================== */
+
+        .search-form {
+
+            display: flex;
+
+            gap: 10px;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .search-input {
+
+            padding: 11px;
+
+            width: 300px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+        }
+
+
+        .search-button {
+
+            padding: 11px 20px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #2563eb;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+
+        .search-button:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        .clear-button {
+
+            text-decoration: none;
+
+            color: #dc2626;
+
+            font-weight: 600;
+        }
+
+
+        /* ==================================================
+           STUDENT CARDS
+           ================================================== */
+
+        .student-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .student-card {
+
+            background: #f8f9fb;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            border: 1px solid #e5e7eb;
+
+            transition: 0.2s ease;
+        }
+
+
+        .student-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .student-card-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+        }
+
+
+        .student-card-header h3 {
+
+            margin: 0;
+
+            font-size: 18px;
+        }
+
+
+        .student-id {
+
+            display: block;
+
+            margin-top: 5px;
+
+            color: #777;
+
+            font-size: 12px;
+        }
+
+
+        .grade-badge {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+
+        .student-performance {
+
+            margin-top: 20px;
+        }
+
+
+        .student-score {
+
+            display: flex;
+
+            align-items: baseline;
+        }
+
+
+        .score {
+
+            font-size: 32px;
+
+            font-weight: 700;
+        }
+
+
+        .out-of {
+
+            color: #888;
+
+            font-size: 14px;
+        }
+
+
+        /* ==================================================
+           PROGRESS BAR
+           ================================================== */
+
+        .progress-container {
+
+            margin-top: 15px;
+
+            width: 100%;
+
+            height: 9px;
+
+            background: #e5e7eb;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background: #2563eb;
+        }
+
+
+        /* ==================================================
+           STUDENT STATISTICS
+           ================================================== */
+
+        .student-stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-top: 18px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+
+        .student-stats div {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+
+        .student-stats span {
+
+            color: #777;
+
+            font-size: 11px;
+        }
+
+
+        .student-stats strong {
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           PAGINATION
+           ================================================== */
+
+        .pagination {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.pagination a,
+.pagination span {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 0 4px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.pagination a {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+}
+
+.pagination span {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+
+        /* ==================================================
+           SUBJECT CARDS
+           ================================================== */
+
+        .subject-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .subject-card {
+
+            background: #f8f9fb;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            border: 1px solid #e5e7eb;
+        }
+
+
+        .subject-card-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 10px;
+        }
+
+
+        .subject-card-header h3 {
+
+            margin: 0;
+
+            font-size: 16px;
+        }
+
+
+        .subject-card-header span {
+
+            font-size: 12px;
+
+            color: #777;
+        }
+
+
+        .subject-score {
+
+            margin-top: 20px;
+        }
+
+
+        .subject-footer {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 12px;
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           CHART
+           ================================================== */
+
+        .chart-container {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 400px;
+        }
+
+
+        /* ==================================================
+           NO DATA
+           ================================================== */
+
+        .no-data {
+
+            padding: 30px;
+
+            text-align: center;
+
+            color: #777;
+
+            grid-column: 1 / -1;
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+           ================================================== */
+
+        @media (max-width: 1000px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .performance-summary {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .subject-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .student-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 15px;
+            }
+
+
+            .stats-grid,
+            .performance-summary,
+            .subject-grid,
+            .student-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .section,
+            .dashboard-section {
+
+                padding: 18px;
+            }
+
+
+            .search-input {
+
+                width: 100%;
+            }
+
+
+            .search-button {
+
+                width: 100%;
+            }
+        }
+
+
+        /* Overall Performance Section */
+.section {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Performance Summary Layout */
+.performance-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Individual Performance Cards */
+.performance-item {
+    background-color: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+
+/* Card Hover Effect */
+.performance-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    border-color: #3b82f6;
+}
+
+/* Performance Labels */
+.performance-label {
+    display: block;
+    color: #475569;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* Performance Values */
+.performance-value {
+    display: block;
+    color: #1e3a8a;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Grade and Performance Text */
+.performance-value.grade,
+.performance-value.performance {
+    font-size: 22px;
+}
+
+.dashboard-header {
+        background-color: #1e3a8a;
+        color: white;
+        padding: 25px;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 25px;
+    }
+
+    .dashboard-header h1 {
+        margin-bottom: 10px;
+    }
+
+    .dashboard-header p {
+        font-size: 16px;
+        margin-bottom: 0;
+    }
+
+    body {
+    background-color: #f1f5f9;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 25px;
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Dashboard Navigation */
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+nav a.nav-link {
+    display: inline-block;
+    padding: 10px 16px !important;
+    margin: 0 !important;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease,
+                color 0.3s ease;
+}
+
+nav a.nav-link:hover {
+    background-color: #3b82f6;
+    color: #ffffff !important;
+}
+
+h2 {
+    color: #1e3a8a;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #dbeafe;
+}
+
+/* Responsive Dashboard */
+@media (max-width: 900px) {
+    .performance-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    .dashboard-header {
+        padding: 20px 12px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .performance-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 15px;
+    }
+
+    nav {
+        padding: 12px !important;
+    }
+
+    nav a.nav-link {
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+}
+
+/* Your existing System Statistics CSS */
+/* ==================================================
+   PASS / FAIL STATISTICS
+   ================================================== */
+
+.pass-fail-statistics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+    gap: 15px;
+    width: 100%;
+    margin-top: 25px;
+    box-sizing: border-box;
+}
+
+/* PASS / FAIL CARDS */
+
+.pass-fail-card {
+    width: 100%;
+    min-width: 0;
+    min-height: 135px;
+    padding: 20px 18px;
+
+    background: #f8f9fb;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+
+    text-align: left;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* CARD HEADING */
+
+.pass-fail-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+
+    line-height: 1.4;
+    margin: 0 0 12px 0;
+
+    overflow-wrap: break-word;
+}
+
+/* CARD VALUE */
+
+.pass-fail-value {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #263f80;
+}
+
+/* PASS COUNT */
+
+.pass-count {
+    color: #28a745;
+}
+
+/* FAIL COUNT */
+
+.fail-count {
+    color: #dc3545;
+}
+
+/* NO RESULT */
+
+.pass-fail-card:last-child .pass-fail-value {
+    color: #263f80;
+}
+
+/* HOVER EFFECT */
+
+.pass-fail-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
+}
+
+
+/* ==================================================
+   TABLET RESPONSIVE
+   ================================================== */
+
+@media screen and (max-width: 992px) {
+
+    .pass-fail-statistics {
+        gap: 12px;
+    }
+
+    .pass-fail-card {
+        min-height: 125px;
+        padding: 18px 14px;
+    }
+
+    .pass-fail-card h3 {
+        font-size: 15px;
+    }
+
+    .pass-fail-value {
+        font-size: 32px;
+    }
+}
+
+
+/* ==================================================
+   MOBILE RESPONSIVE
+   ================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .pass-fail-statistics {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+        gap: 10px;
+    }
+
+    .pass-fail-card {
+        min-height: 115px;
+        padding: 15px 12px;
+        border-radius: 12px;
+    }
+
+    .pass-fail-card h3 {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .pass-fail-value {
+        font-size: 30px;
+    }
+}
+
+
+/* ==================================================
+   SMALL MOBILE
+   ================================================== */
+
+@media screen and (max-width: 350px) {
+
+    .pass-fail-statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .pass-fail-card {
+        min-height: 100px;
+    }
+
+}
+
+/* ==================================================
+   PERFORMANCE DISTRIBUTION
+   ================================================== */
+
+.performance-chart-container {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 750px;
+
+    height: 400px;
+
+    margin: 30px auto 10px;
+
+    padding: 15px;
+
+}
+
+
+/* PERFORMANCE TABLE */
+
+.section table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 20px;
+
+}
+
+.section table th,
+.section table td {
+
+    padding: 12px 15px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+.section table th {
+
+    background-color: #f1f3f5;
+
+    font-weight: bold;
+
+}
+
+
+/* TABLET RESPONSIVENESS */
+
+@media screen and (max-width: 768px) {
+
+    .performance-chart-container {
+
+        max-width: 100%;
+
+        height: 350px;
+
+        padding: 10px;
+
+    }
+
+    .section table th,
+    .section table td {
+
+        padding: 10px;
+
+        font-size: 14px;
+
+    }
+
+}
+
+
+/* MOBILE RESPONSIVENESS */
+
+@media screen and (max-width: 480px) {
+
+    .performance-chart-container {
+
+        height: 300px;
+
+        padding: 5px;
+
+        margin-top: 20px;
+
+    }
+
+    .section table th,
+    .section table td {
+
+        padding: 8px;
+
+        font-size: 12px;
+
+    }
+
+}
+</style>
+
+
+</style>
+
+
+    <!-- Chart.js -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    
+
+
+
+
+</head>
+
+
+<body>
+
+    <nav style="background-color: #1e293b;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;">
+
+    
+    <a class="nav-link" href="{% url 'student_list' %}"
+       style="color: white;">
+        Students
+    </a>
+
+    <a class="nav-link" href="{% url 'home' %}"
+       style="color: white;">
+        Home
+    </a>
+
+</nav>
+
+
+<div class="container">
+
+
+    <!-- ==================================================
+         HEADER
+         ================================================== -->
+
+    <div class="dashboard-container">
+
+    <div class="dashboard-header">
+        <h1>Student Performance &amp; Analytics System</h1>
+        <p>Welcome to the Student Performance Dashboard</p>
+    </div>
+
+</div>
+
+    
+
+
+    <p class="subtitle">
+        Analytics and performance overview
+    </p>
+
+
+    
+
+    <!-- ==================================================
+         SYSTEM STATISTICS
+         ================================================== -->
+
+    
+<div class="section">
+
+    <h2>
+        System Statistics
+    </h2>
+
+    <div class="stats-grid">
+
+        <!-- KEEP ALL YOUR EXISTING STATISTIC CARDS HERE -->
+
+    </div>
+
+
+
+
+
+        
+
+
+        <div class="stats-grid">
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Total Students
+                </div>
+
+                <div class="card-value">
+                    {{ total_students }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Total Subjects
+                </div>
+
+                <div class="card-value">
+                    {{ total_subjects }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Marks Records
+                </div>
+
+                <div class="card-value">
+                    {{ total_marks_records }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Overall Average
+                </div>
+
+                <div class="card-value">
+                    {{ average_marks|floatformat:2 }}
+                </div>
+
+            </div>
+
+           <!-- ==================================================
+     PASS / FAIL STATISTICS
+     ================================================== -->
+
+<div class="section">
+
+    <h2>
+        Pass / Fail Statistics
+    </h2>
+
+    <div class="stats-grid">
+
+        <!-- PASSED STUDENTS -->
+
+        <div class="card">
+
+            <div class="card-title">
+                Passed Students
+            </div>
+
+            <div class="card-value">
+                {{ passed_students }}
+            </div>
+
+        </div>
+
+
+        <!-- FAILED STUDENTS -->
+
+        <div class="card">
+
+            <div class="card-title">
+                Failed Students
+            </div>
+
+            <div class="card-value">
+                {{ failed_students }}
+            </div>
+
+        </div>
+
+
+        <!-- NO RESULT -->
+
+        <div class="card">
+
+            <div class="card-title">
+                No Result
+            </div>
+
+            <div class="card-value">
+                {{ no_result_students }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+        </div>
+
+    </div>
+
+    <!-- PASS / FAIL DOUGHNUT CHART -->
+
+<div class="section">
+
+    <h2>
+        Pass / Fail Analysis Chart
+    </h2>
+
+    <p class="subtitle">
+        Visual comparison of passed and failed students
+    </p>
+
+    <div class="performance-chart-container">
+
+        <canvas id="passFailChart"></canvas>
+
+    </div>
+
+</div>
+
+
+    <!-- ==================================================
+         OVERALL PERFORMANCE
+         ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Overall Performance
+        </h2>
+
+
+        <div class="performance-summary">
+
+
+            <div class="performance-item">
+
+                <span class="performance-label">
+                    Percentage
+                </span>
+
+                <span class="performance-value">
+                    {{ percentage|floatformat:2 }}%
+                </span>
+
+            </div>
+
+
+            <div class="performance-item">
+
+                <span class="performance-label">
+                    CGPA
+                </span>
+
+                <span class="performance-value">
+                    {{ cgpa|floatformat:2 }}
+                </span>
+
+            </div>
+
+
+            <div class="performance-item">
+
+                <span class="performance-label">
+                    Overall Grade
+                </span>
+
+                <span class="performance-value grade">
+                    {{ grade }}
+                </span>
+
+            </div>
+
+
+            <div class="performance-item">
+
+                <span class="performance-label">
+                    Performance
+                </span>
+
+                <span class="performance-value performance">
+                    {{ performance_status }}
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         PERFORMANCE DISTRIBUTION
+         ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Performance Distribution
+        </h2>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Performance
+                    </th>
+
+                    <th>
+                        Number of Students
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+                    <td>Outstanding</td>
+                    <td>
+                        {{ performance_distribution.outstanding }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Excellent</td>
+                    <td>
+                        {{ performance_distribution.excellent }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Very Good</td>
+                    <td>
+                        {{ performance_distribution.very_good }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Good</td>
+                    <td>
+                        {{ performance_distribution.good }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Average</td>
+                    <td>
+                        {{ performance_distribution.average }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Pass</td>
+                    <td>
+                        {{ performance_distribution.pass }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Needs Improvement</td>
+                    <td>
+                        {{ performance_distribution.needs_improvement }}
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <!-- PERFORMANCE DISTRIBUTION CHART -->
+
+<div class="performance-chart-container">
+
+    <canvas
+        id="performanceDistributionChart"
+    ></canvas>
+
+</div>
+
+    </div>
+
+
+    <!-- ==================================================
+         STUDENT SEARCH
+         ================================================== -->
+
+    <form
+        method="GET"
+        class="search-form"
+    >
+
+        <input
+            type="text"
+            name="search"
+            class="search-input"
+            placeholder="Search by student name or ID"
+            value="{{ search_query }}"
+        >
+
+
+        <button
+            type="submit"
+            class="search-button"
+        >
+            Search
+        </button>
+
+
+        {% if search_query %}
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="clear-button"
+            >
+                Clear
+            </a>
+
+        {% endif %}
+
+    </form>
+
+
+        <!-- ==================================================
+         SUBJECT-WISE PERFORMANCE
+         ================================================== -->
+
+    <div class="dashboard-section">
+
+        <div class="section-header">
+
+            <h2>
+                Subject-wise Performance
+            </h2>
+
+            <p>
+                Detailed subject performance analysis
+            </p>
+
+        </div>
+
+
+        <div class="subject-grid">
+
+            {% for result in subject_results %}
+
+                <div class="subject-card">
+
+                    <!-- SUBJECT HEADER -->
+
+                    <div class="subject-card-header">
+
+                        <h3>
+                            {{ result.subject.name }}
+                        </h3>
+
+                        <span>
+                            {{ result.records }} Records
+                        </span>
+
+                    </div>
+
+
+                    <!-- AVERAGE MARKS -->
+
+                    <div class="subject-score">
+
+                        <span class="score">
+                            {{ result.average_marks|floatformat:2 }}
+                        </span>
+
+                        <span class="out-of">
+                            / 100
+                        </span>
+
+                    </div>
+
+
+                    <!-- PROGRESS BAR -->
+
+                    <div class="progress-container">
+
+                        <div
+                            class="progress-bar"
+                            style="width: {{ result.percentage }}%;">
+                        </div>
+
+                    </div>
+
+
+                    <!-- SUBJECT STATISTICS -->
+
+                    <div class="subject-footer">
+
+                        <span>
+                            Average Marks
+                        </span>
+
+                        <strong>
+                            {{ result.percentage|floatformat:2 }}%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="subject-footer">
+
+                        <span>
+                            Highest Marks
+                        </span>
+
+                        <strong>
+                            {{ result.highest_marks }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="subject-footer">
+
+                        <span>
+                            Lowest Marks
+                        </span>
+
+                        <strong>
+                            {{ result.lowest_marks }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="subject-footer">
+
+                        <span>
+                            Passed Students
+                        </span>
+
+                        <strong style="color: green;">
+                            {{ result.passed }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="subject-footer">
+
+                        <span>
+                            Failed Students
+                        </span>
+
+                        <strong style="color: red;">
+                            {{ result.failed }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            {% empty %}
+
+                <div class="no-data">
+
+                    No subject performance data available.
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+        <!-- ==================================================
+             PAGINATION
+             ================================================== -->
+
+        {% if student_results.paginator.num_pages > 1 %}
+
+            <div class="pagination">
+
+
+                {% if student_results.has_previous %}
+
+                    <a
+                        href="?page={{ student_results.previous_page_number }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}"
+                    >
+                        Previous
+                    </a>
+
+                {% endif %}
+
+
+                <span>
+
+                    Page
+                    {{ student_results.number }}
+
+                    of
+
+                    {{ student_results.paginator.num_pages }}
+
+                </span>
+
+
+                {% if student_results.has_next %}
+
+                    <a
+                        href="?page={{ student_results.next_page_number }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}"
+                    >
+                        Next
+                    </a>
+
+                {% endif %}
+
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    
+
+
+    <!-- ==================================================
+         SUBJECT-WISE CHART
+         ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Subject-wise Performance Chart
+        </h2>
+
+        <p class="subtitle">
+            Comparison of average marks by subject
+        </p>
+
+
+        <div class="chart-container">
+
+            <canvas
+                id="subjectPerformanceChart"
+            ></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         STUDENT-WISE CHART
+         ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Student-wise Performance Chart
+        </h2>
+
+        <p class="subtitle">
+            Comparison of average marks by student
+        </p>
+
+
+        <div class="chart-container">
+
+            <canvas
+                id="studentPerformanceChart"
+            ></canvas>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ======================================================
+     SUBJECT-WISE CHART JAVASCRIPT
+     ====================================================== -->
+
+<script>
+
+    const subjectLabels = [
+
+        {% for result in subject_results %}
+
+            "{{ result.subject.name|escapejs }}",
+
+        {% endfor %}
+
+    ];
+
+
+    const subjectAverages = [
+
+        {% for result in subject_results %}
+
+            {{ result.average_marks }},
+
+        {% endfor %}
+
+    ];
+
+
+    const subjectCtx =
+        document
+            .getElementById(
+                "subjectPerformanceChart"
+            )
+            .getContext("2d");
+
+
+    new Chart(subjectCtx, {
+
+        type: "bar",
+
+        data: {
+
+            labels: subjectLabels,
+
+            datasets: [
+
+                {
+
+                    label: "Average Marks",
+
+                    data: subjectAverages,
+
+                    borderWidth: 1
+
+                }
+
+            ]
+
+        },
+
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    max: 100,
+
+                    title: {
+
+                        display: true,
+
+                        text: "Average Marks"
+
+                    }
+
+                },
+
+
+                x: {
+
+                    title: {
+
+                        display: true,
+
+                        text: "Subjects"
+
+                    }
+
+                }
+
+            },
+
+
+            plugins: {
+
+                legend: {
+
+                    display: true
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+<!-- PASS / FAIL DOUGHNUT CHART -->
+
+<script>
+
+    const passFailCtx = document
+        .getElementById("passFailChart")
+        .getContext("2d");
+
+    new Chart(passFailCtx, {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: ["Passed", "Failed"],
+
+            datasets: [{
+
+                label: "Number of Students",
+
+                data: [
+                    {{ passed_students }},
+                    {{ failed_students }}
+                ],
+
+                backgroundColor: [
+                    "#28a745",
+                    "#dc3545"
+                ],
+
+                borderWidth: 1
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    position: "right"
+                },
+
+                title: {
+
+                    display: true,
+
+                    text: "Pass / Fail Student Analysis"
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+
+<!-- ======================================================
+     STUDENT-WISE CHART JAVASCRIPT
+     ====================================================== -->
+
+<script>
+
+    const studentLabels = [
+
+        {% for result in student_results %}
+
+            "{{ result.student.name|escapejs }}",
+
+        {% endfor %}
+
+    ];
+
+
+    const studentAverages = [
+
+        {% for result in student_results %}
+
+            {{ result.average_marks }},
+
+        {% endfor %}
+
+    ];
+
+
+    const studentCtx =
+        document
+            .getElementById(
+                "studentPerformanceChart"
+            )
+            .getContext("2d");
+
+
+    new Chart(studentCtx, {
+
+        type: "bar",
+
+        data: {
+
+            labels: studentLabels,
+
+            datasets: [
+
+                {
+
+                    label: "Average Marks",
+
+                    data: studentAverages,
+
+                    borderWidth: 1
+
+                }
+
+            ]
+
+        },
+
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    max: 100,
+
+                    title: {
+
+                        display: true,
+
+                        text: "Average Marks"
+
+                    }
+
+                },
+
+
+                x: {
+
+                    title: {
+
+                        display: true,
+
+                        text: "Students"
+
+                    }
+
+                }
+
+            },
+
+
+            plugins: {
+
+                legend: {
+
+                    display: true
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+
+<!-- ======================================================
+     PERFORMANCE DISTRIBUTION CHART
+     ====================================================== -->
+
+<script>
+
+    const performanceLabels = [
+
+        "Outstanding",
+
+        "Excellent",
+
+        "Very Good",
+
+        "Good",
+
+        "Average",
+
+        "Pass",
+
+        "Needs Improvement"
+
+    ];
+
+
+    const performanceValues = [
+
+        {{ performance_distribution.outstanding }},
+
+        {{ performance_distribution.excellent }},
+
+        {{ performance_distribution.very_good }},
+
+        {{ performance_distribution.good }},
+
+        {{ performance_distribution.average }},
+
+        {{ performance_distribution.pass }},
+
+        {{ performance_distribution.needs_improvement }}
+
+    ];
+
+
+    const performanceCtx =
+        document
+            .getElementById(
+                "performanceDistributionChart"
+            )
+            .getContext("2d");
+
+
+    new Chart(performanceCtx, {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: performanceLabels,
+
+            datasets: [
+
+                {
+
+                    label: "Students",
+
+                    data: performanceValues,
+
+                    borderWidth: 1
+
+                }
+
+            ]
+
+        },
+
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    position: "right"
+
+                },
+
+
+                title: {
+
+                    display: true,
+
+                    text:
+                        "Student Performance Distribution"
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+<footer style="
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+">
+    <p>Student Performance & Analytics System</p>
+    <p>© 2026 All Rights Reserved</p>
+</footer>
+
+</body>
+
+</html>
