@@ -1,403 +1,609 @@
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f7fb;
-        color: #333;
-        margin: 0;
-        padding: 25px;
-    }
+<!DOCTYPE html>
+<html lang="en">
 
-    h1 {
-        color: #1f3c88;
-        text-align: center;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records Management - EduMetrics</title>
 
-    h2 {
-        color: #243b64;
-        margin-top: 30px;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-    a {
-        text-decoration: none;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: white;
-        margin-top: 15px;
-        margin-bottom: 25px;
-    }
-
-    th {
-        background-color: #1f3c88;
-        color: white;
-        padding: 12px;
-        text-align: left;
-    }
-
-    td {
-        padding: 10px;
-        border: 1px solid #ddd;
-    }
-
-    tr:hover {
-        background-color: #eef3ff;
-    }
-
-    th,
-    td {
-        border: 1px solid #ddd;
-    }
-
-    @media (max-width: 768px) {
         body {
-            padding: 10px;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            margin: 0;
+            padding: 25px 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .page-title-box h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0 0 6px 0;
+            letter-spacing: -0.4px;
+        }
+
+        .page-title-box p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* SUMMARY METRIC CARDS */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 22px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid #2563eb;
+        }
+
+        .summary-card.card-green {
+            border-left-color: #10b981;
+        }
+
+        .summary-card.card-amber {
+            border-left-color: #f59e0b;
+        }
+
+        .summary-info h3 {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 6px 0;
+        }
+
+        .summary-info p {
+            color: #0f172a;
+            font-size: 30px;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .summary-icon {
+            font-size: 32px;
+            opacity: 0.8;
+        }
+
+        /* TOOLBAR */
+        .toolbar-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px 24px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 240px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            background-color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-search {
+            background-color: #1e3a8a;
+            color: #ffffff;
+        }
+
+        .btn-search:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-clear {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-clear:hover {
+            background-color: #e2e8f0;
+        }
+
+        .btn-add-student {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            padding: 10px 18px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-add-student:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        /* DATA TABLE CARD */
+        .table-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
         }
 
         table {
-            font-size: 12px;
-        }
-
-        th,
-        td {
-            padding: 6px;
-        }
-    }
-
-.btn {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 3px;
-    border-radius: 5px;
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.btn-add {
-    background-color: #198754;
-}
-
-.btn-view {
-    background-color: #0d6efd;
-}
-
-.btn-edit {
-    background-color: #f0ad4e;
-    color: #222;
-}
-
-.btn-delete {
-    background-color: #dc3545;
-}
-
-.btn:hover {
-    opacity: 0.85;
-}
-
-    /* =========================================
-       STUDENT SUMMARY CARD
-       ========================================= */
-
-    .summary-cards {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin: 20px 0;
-    }
-
-    .summary-card {
-        background: white;
-        border-left: 5px solid #1f3c88;
-        border-radius: 8px;
-        padding: 20px;
-        min-width: 200px;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .summary-card h3 {
-        color: #243b64;
-        font-size: 16px;
-        margin: 0 0 10px;
-    }
-
-    .summary-card p {
-        color: #1f3c88;
-        font-size: 30px;
-        font-weight: bold;
-        margin: 0;
-    }
-
-
-        /* =========================================
-       NAVIGATION BAR
-       ========================================= */
-
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 15px;
-        background-color: #1f3c88;
-        padding: 15px 25px;
-        border-radius: 8px;
-        margin-bottom: 25px;
-    }
-
-    .navbar-brand {
-        color: white;
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    .navbar-links {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .navbar-links a {
-        color: white;
-        padding: 10px 15px;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.2s;
-    }
-
-    .navbar-links a:hover {
-        background-color: #3458a5;
-    }
-
-    .navbar-links a.active {
-        background-color: #ffffff;
-        color: #1f3c88;
-    }
-
-    @media (max-width: 600px) {
-        .navbar {
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 15px;
-        }
-
-        .navbar-links {
             width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
         }
-    }
 
-        /* =========================================
-       STUDENT ACTIONS
-       ========================================= */
+        th {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 14px 16px;
+            font-weight: 600;
+            text-align: left;
+            border: none;
+            white-space: nowrap;
+        }
 
-    .student-actions {
-        display: flex;
-        justify-content: flex-end;
-        margin: 20px 0;
-    }
+        td {
+            padding: 13px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+            color: #334155;
+        }
 
-    .student-actions .btn {
-        padding: 12px 20px;
-        font-size: 14px;
-        border-radius: 6px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
-    }
-</style>
+        tr:last-child td {
+            border-bottom: none;
+        }
 
+        tr:hover td {
+            background-color: #f8fafc;
+        }
 
-<nav class="navbar">
+        /* BADGES & PILLS */
+        .badge-id {
+            color: #2563eb;
+            font-weight: 700;
+            text-decoration: none;
+        }
 
-    <div class="navbar-brand">
-        Student Performance System
-    </div>
+        .badge-id:hover {
+            text-decoration: underline;
+        }
 
-    <div class="navbar-links">
-        <a href="{% url 'dashboard' %}">Dashboard</a>
+        .badge-grade {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 12px;
+            text-align: center;
+            min-width: 26px;
+        }
 
-    
+        .grade-O,
+        .grade-E {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
 
-        <a href="{% url 'home' %}" class="active">
-           Home
-        </a>
-    </div>
+        .grade-A,
+        .grade-B {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
 
-</nav>
+        .grade-C,
+        .grade-D {
+            background-color: #fef3c7;
+            color: #b45309;
+        }
 
-<h1>Student List Management</h1>
+        .grade-F {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
 
-<h2>Student List</h2>
+        .status-pill {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
 
+        .status-pass {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
 
+        .status-fail {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
 
-<div class="summary-cards">
+        .status-no-result {
+            background-color: #f1f5f9;
+            color: #64748b;
+        }
 
-    <div class="summary-card">
-        <h3>Total Students</h3>
-        <p>{{ total_students }}</p>
-    </div>
+        /* ACTION BUTTONS */
+        .action-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            white-space: nowrap;
+        }
 
-    <div class="summary-card">
-        <h3>Students With Marks</h3>
-        <p>{{ students_with_marks }}</p>
-    </div>
+        .action-btn {
+            padding: 5px 9px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
 
-    <div class="summary-card">
-        <h3>Students Without Marks</h3>
-        <p>{{ students_without_marks }}</p>
-    </div>
+        .btn-view {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
 
-</div>
+        .btn-view:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
 
-{% if request.GET.search %} 
-<p> <strong>Search Results:</strong> {{ total_students }} student(s) found for "{{ request.GET.search }}" </p>
-{% endif %}
+        .btn-edit {
+            background-color: #fffbeb;
+            color: #b45309;
+            border: 1px solid #fde68a;
+        }
 
+        .btn-edit:hover {
+            background-color: #f59e0b;
+            color: #ffffff;
+        }
 
+        .btn-delete {
+            background-color: #fff1f2;
+            color: #e11d48;
+            border: 1px solid #fecdd3;
+        }
 
-<form method="GET" action="{% url 'student_list' %}">
-    <input
-        type="text"
-        name="search"
-        placeholder="Search by ID, name, email, or department"
-        value="{{ request.GET.search|default:'' }}"
-    >
+        .btn-delete:hover {
+            background-color: #e11d48;
+            color: #ffffff;
+        }
 
+        /* PAGINATION */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 25px 0;
+            font-size: 13px;
+        }
 
-<button type="submit" class="btn btn-view">
-    Search
-</button>
+        .page-link {
+            padding: 7px 12px;
+            border-radius: 6px;
+            background-color: #ffffff;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
 
-<a href="{% url 'student_list' %}" class="btn btn-edit">
-    Clear
-</a>
+        .page-link:hover {
+            background-color: #f1f5f9;
+            border-color: #94a3b8;
+        }
 
+        .page-indicator {
+            padding: 7px 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
 
-</form>
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 10px;
+            }
 
+            .toolbar-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
 
-<div class="student-actions">
+            .search-group {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
 
-    <a href="{% url 'student_add' %}" class="btn btn-add">
-        + Add New Student
-    </a>
+<body>
 
-</div>
+    <div class="container">
 
+        <!-- NAVIGATION BAR -->
+        {% include 'partials/navbar.html' %}
 
+        <!-- ALERTS -->
+        {% include 'partials/messages.html' %}
 
-<div style="overflow-x: auto;">
-    <table border="1" cellpadding="8">
-     <tr>
-        <th>Student ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Date of Birth</th>
-        <th>Department</th>
-        <th>Average</th>
-        <th>Percentage</th>
-        <th>CGPA</th>
-        <th>Grade</th>
-        <th>Performance</th>
-        <th>Result</th>
-        <th>Action</th>
-    </tr>
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <div class="page-title-box">
+                <h1>Student Records Management</h1>
+                <p>Official registry of enrolled students, academic departments, performance statistics, and record
+                    actions.</p>
+            </div>
 
-
-{% for result in student_results %}
-<tr>
-    <td>
-        <a href="{% url 'student_detail' result.student.student_id %}">
-            {{ result.student.student_id }}
-        </a>
-    </td>
-
-    <td>{{ result.student.name }}</td>
-    <td>{{ result.student.email }}</td>
-    <td>{{ result.student.date_of_birth }}</td>
-    <td>{{ result.student.department }}</td>
-
-    <td>{{ result.average_marks|floatformat:2 }}</td>
-    <td>{{ result.percentage|floatformat:2 }}%</td>
-    <td>{{ result.cgpa|floatformat:2 }}</td>
-    <td>{{ result.grade }}</td>
-    <td>{{ result.performance_status }}</td>
-    <td>{{ result.result_status }}</td>
-
-    <td>
-    <a href="{% url 'student_detail' result.student.student_id %}"
-       class="btn btn-view">
-        View Performance
-    </a>
-
-<a href="{% url 'student_edit' result.student.student_id %}"
-   class="btn btn-edit">
-    Edit
-</a>
-
-<a href="{% url 'student_delete' result.student.student_id %}"
-   class="btn btn-delete">
-    Delete
-</a>
-
-</td>
-
-
-</tr>
-{% empty %}
-
-<tr>
-    <td colspan="12" style="text-align: center; padding: 20px;">
-        {% if request.GET.search %}
-            No students found matching "{{ request.GET.search }}".
-            <br><br>
-            <a href="{% url 'student_list' %}" class="btn btn-view">
-                Clear Search
+            {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'student_add' %}" class="btn btn-add-student">
+                + Add New Student
             </a>
-        {% else %}
-            No students have been added yet.
+            {% endif %}
+        </div>
+
+        <!-- SUMMARY METRIC CARDS -->
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-info">
+                    <h3>Total Students</h3>
+                    <p>{{ total_students }}</p>
+                </div>
+                <span class="summary-icon">👥</span>
+            </div>
+
+            <div class="summary-card card-green">
+                <div class="summary-info">
+                    <h3>Students With Marks</h3>
+                    <p>{{ students_with_marks }}</p>
+                </div>
+                <span class="summary-icon">✅</span>
+            </div>
+
+            <div class="summary-card card-amber">
+                <div class="summary-info">
+                    <h3>Pending Marks</h3>
+                    <p>{{ students_without_marks }}</p>
+                </div>
+                <span class="summary-icon">⏳</span>
+            </div>
+        </div>
+
+        <!-- SEARCH & ACTION TOOLBAR -->
+        <div class="toolbar-card">
+            <form method="GET" action="{% url 'student_list' %}" class="search-group">
+                <input type="text" name="search" class="search-input"
+                    placeholder="Search by student name, ID, email, or department..."
+                    value="{{ request.GET.search|default:'' }}">
+                <button type="submit" class="btn btn-search">
+                    Search
+                </button>
+                {% if request.GET.search %}
+                <a href="{% url 'student_list' %}" class="btn btn-clear">
+                    Clear
+                </a>
+                {% endif %}
+            </form>
+
+            <div style="font-size: 13px; color: #64748b;">
+                {% if request.GET.search %}
+                Found <strong>{{ total_students }}</strong> result(s) for "{{ request.GET.search }}"
+                {% else %}
+                Showing active academic roster
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- DATA TABLE CARD -->
+        <div class="table-card">
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Full Name</th>
+                            <th>Email Address</th>
+                            <th>Date of Birth</th>
+                            <th>Department</th>
+                            <th style="text-align: right;">Average</th>
+                            <th style="text-align: right;">Percentage</th>
+                            <th style="text-align: center;">CGPA</th>
+                            <th style="text-align: center;">Grade</th>
+                            <th>Performance</th>
+                            <th style="text-align: center;">Result</th>
+                            <th style="text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in student_results %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'student_detail' result.student.student_id %}" class="badge-id">
+                                    {{ result.student.student_id }}
+                                </a>
+                            </td>
+                            <td style="font-weight: 600; color: #0f172a;">
+                                {{ result.student.name }}
+                            </td>
+                            <td>{{ result.student.email }}</td>
+                            <td>{{ result.student.date_of_birth }}</td>
+                            <td>{{ result.student.department }}</td>
+                            <td style="text-align: right; font-weight: bold;">
+                                {{ result.average_marks|floatformat:2 }}
+                            </td>
+                            <td style="text-align: right; font-weight: bold; color: #1e3a8a;">
+                                {{ result.percentage|floatformat:2 }}%
+                            </td>
+                            <td style="text-align: center; font-weight: 700;">
+                                {{ result.cgpa|floatformat:2 }}
+                            </td>
+                            <td style="text-align: center;">
+                                <span class="badge-grade grade-{{ result.grade }}">{{ result.grade }}</span>
+                            </td>
+                            <td>{{ result.performance_status }}</td>
+                            <td style="text-align: center;">
+                                {% if result.result_status == 'PASS' %}
+                                <span class="status-pill status-pass">PASS</span>
+                                {% elif result.result_status == 'FAIL' %}
+                                <span class="status-pill status-fail">FAIL</span>
+                                {% else %}
+                                <span class="status-pill status-no-result">NO RESULT</span>
+                                {% endif %}
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="action-group">
+                                    <a href="{% url 'student_detail' result.student.student_id %}"
+                                        class="action-btn btn-view" title="View Detailed Report">
+                                        View
+                                    </a>
+
+                                    {% if user.is_authenticated and user.is_staff %}
+                                    <a href="{% url 'student_edit' result.student.student_id %}"
+                                        class="action-btn btn-edit" title="Edit Student">
+                                        Edit
+                                    </a>
+                                    <a href="{% url 'student_delete' result.student.student_id %}"
+                                        class="action-btn btn-delete" title="Delete Student">
+                                        Delete
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="12" style="text-align: center; padding: 35px; color: #64748b;">
+                                {% if request.GET.search %}
+                                No students found matching search query "{{ request.GET.search }}".
+                                <br><br>
+                                <a href="{% url 'student_list' %}" class="btn btn-search">
+                                    Reset Search
+                                </a>
+                                {% else %}
+                                No students have been registered in the system yet.
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- PAGINATION -->
+        {% if page_obj.paginator.num_pages > 1 %}
+        <div class="pagination-container">
+            {% if page_obj.has_previous %}
+            <a href="?search={{ search_query|urlencode }}&page=1" class="page-link">First</a>
+            <a href="?search={{ search_query|urlencode }}&page={{ page_obj.previous_page_number }}" class="page-link">←
+                Previous</a>
+            {% endif %}
+
+            <span class="page-indicator">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+            <a href="?search={{ search_query|urlencode }}&page={{ page_obj.next_page_number }}" class="page-link">Next
+                →</a>
+            <a href="?search={{ search_query|urlencode }}&page={{ page_obj.paginator.num_pages }}"
+                class="page-link">Last</a>
+            {% endif %}
+        </div>
         {% endif %}
-    </td>
-</tr>
-{% endfor %}
 
+    </div>
 
-</table>
-</div>
+    {% include 'partials/footer.html' %}
 
-<div class="pagination" style="margin: 20px 0; text-align: center;">
+</body>
 
-{% if page_obj.has_previous %}
-    <a class="btn btn-view"
-       href="?search={{ search_query|urlencode }}&page=1">
-        First
-    </a>
-
-    <a class="btn btn-view"
-       href="?search={{ search_query|urlencode }}&page={{ page_obj.previous_page_number }}">
-        Previous
-    </a>
-{% endif %}
-
-<span style="margin: 0 10px;">
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-</span>
-
-{% if page_obj.has_next %}
-    <a class="btn btn-view"
-       href="?search={{ search_query|urlencode }}&page={{ page_obj.next_page_number }}">
-        Next
-    </a>
-
-    <a class="btn btn-view"
-       href="?search={{ search_query|urlencode }}&page={{ page_obj.paginator.num_pages }}">
-        Last
-    </a>
-{% endif %}
-
-
-</div>
-
-
-{% include 'partials/footer.html' %}
+</html>

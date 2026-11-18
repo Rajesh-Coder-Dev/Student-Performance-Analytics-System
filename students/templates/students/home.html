@@ -1,366 +1,489 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Student Performance & Analytics System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance & Analytics System - Academic Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-
         * {
             box-sizing: border-box;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
-            padding: 25px;
-            background-color: #f1f5f9;
-            color: #222;
+            padding: 25px 20px;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.5;
         }
 
         .container {
             max-width: 1200px;
-            margin: auto;
-        }
-
-        /* NAVIGATION */
-
-        nav {
-            background-color: #1e293b;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            color: white;
-            font-size: 19px;
-            font-weight: bold;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #3b82f6;
+            margin: 0 auto;
         }
 
         /* HERO SECTION */
-
         .hero {
-            background-color: #1e3a8a;
-            color: white;
-            padding: 65px 25px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+            color: #ffffff;
+            padding: 70px 40px;
             text-align: center;
-            border-radius: 12px;
-            margin-bottom: 30px;
+            border-radius: 16px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #bfdbfe;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            backdrop-filter: blur(8px);
         }
 
         .hero h1 {
-            font-size: 36px;
-            margin-bottom: 15px;
+            font-size: 38px;
+            font-weight: 800;
+            margin: 0 0 16px 0;
+            letter-spacing: -0.8px;
+            line-height: 1.2;
         }
 
         .hero p {
             font-size: 17px;
+            color: #cbd5e1;
+            max-width: 780px;
+            margin: 0 auto 30px auto;
             line-height: 1.7;
+            font-weight: 400;
         }
 
-        .hero-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 13px 25px;
-            background-color: white;
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: #ffffff;
             color: #1e3a8a;
             text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            transition: 0.3s;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
-        .hero-button:hover {
-            background-color: #dbeafe;
-            transform: translateY(-3px);
+        .btn-primary:hover {
+            background-color: #f1f5f9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
-        /* COMMON SECTION */
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 26px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
+        }
 
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* HIGHLIGHT STRIP */
+        .highlight-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #e2e8f0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .highlight-item span {
+            font-size: 20px;
+        }
+
+        /* SECTION STYLING */
         .section {
-            background: white;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            background: #ffffff;
+            padding: 35px 30px;
+            margin-bottom: 35px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
         }
 
-        h2 {
-            color: #1e3a8a;
+        .section-header {
+            margin-bottom: 28px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .section-header h2 {
+            color: #0f172a;
             font-size: 24px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #dbeafe;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+            letter-spacing: -0.3px;
         }
 
-        /* FEATURE CARDS */
+        .section-header p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+        }
 
+        /* FEATURE CARDS GRID */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 22px;
         }
 
         .card {
-            background: #f8f9fb;
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
-            transition: 0.3s;
+            background: #ffffff;
+            padding: 28px 24px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            border-radius: 12px 12px 0 0;
+            background: #2563eb;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-            border-color: #3b82f6;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.1);
+            border-color: #cbd5e1;
+        }
+
+        .card-icon {
+            font-size: 30px;
+            margin-bottom: 16px;
+            display: inline-block;
         }
 
         .card h3 {
-            color: #1e3a8a;
-            font-size: 19px;
+            color: #0f172a;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
         }
 
         .card p {
-            color: #666;
+            color: #64748b;
             line-height: 1.6;
+            font-size: 14px;
+            margin: 0 0 20px 0;
         }
 
-        .card a {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 16px;
-            background-color: #2563eb;
-            color: white;
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #2563eb;
             text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 13px;
+            transition: color 0.2s;
+            margin-top: auto;
         }
 
-        .card a:hover {
-            background-color: #1d4ed8;
+        .card-link:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
         }
 
-        /* ABOUT SECTION */
-
-        .about-text {
-            color: #555;
-            line-height: 1.8;
-            font-size: 16px;
+        /* TECH STACK CHIPS */
+        .tech-grid {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 15px;
         }
 
-        /* FOOTER */
-
-        footer {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            border-radius: 8px;
+        .tech-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            color: #334155;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
         }
 
-        /* RESPONSIVE DESIGN */
-
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-
             body {
-                padding: 12px;
+                padding: 15px 10px;
             }
 
-            .feature-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .hero {
+                padding: 45px 20px;
             }
 
             .hero h1 {
-                font-size: 27px;
+                font-size: 28px;
             }
 
-            nav {
-                gap: 12px;
+            .hero p {
+                font-size: 15px;
             }
-        }
-
-        @media (max-width: 500px) {
 
             .feature-grid {
                 grid-template-columns: 1fr;
             }
-
-            .hero {
-                padding: 40px 15px;
-            }
-
-            .hero h1 {
-                font-size: 23px;
-            }
-
-            nav {
-                flex-direction: column;
-            }
-
         }
-
     </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION BAR -->
+    {% include 'partials/navbar.html' %}
 
-    <nav>
-
-        <div class="logo">
-            Student Performance System
-        </div>
-
-        <div>
-
-            <a href="{% url 'home' %}">Home</a>
-
-            <a href="{% url 'dashboard' %}">Dashboard</a>
-
-            <a href="{% url 'student_list' %}">Students</a>
-
-            <a href="#about">About</a>
-
-        </div>
-
-    </nav>
-
+    <!-- MESSAGES NOTIFICATION BANNER -->
+    {% include 'partials/messages.html' %}
 
     <!-- HERO SECTION -->
-
     <div class="hero">
-
-        <h1>
-            Student Performance & Analytics System
-        </h1>
-
-        <p>
-            Manage student records, track academic results
-            and analyze student performance in one place.
-        </p>
-
-        <a href="{% url 'dashboard' %}" class="hero-button">
-            Explore Dashboard →
-        </a>
-
-    </div>
-
-
-    <!-- FEATURES SECTION -->
-
-    <div class="section">
-
-        <h2>System Features</h2>
-
-        <div class="feature-grid">
-
-            <div class="card">
-
-                <h3>Student Management</h3>
-
-                <p>
-                    Add, update, view and manage student
-                    information easily.
-                </p>
-
-                <a href="{% url 'student_list' %}">
-                    Manage Students
-                </a>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>Marks Management</h3>
-
-                <p>
-                    Maintain student marks and academic
-                    records for different subjects.
-                </p>
-
-                <a href="{% url 'dashboard' %}">
-                    View Records
-                </a>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>Performance Analytics</h3>
-
-                <p>
-                    Analyze grades, percentages, CGPA
-                    and pass/fail statistics.
-                </p>
-
-                <a href="{% url 'dashboard' %}">
-                    View Analytics
-                </a>
-
-            </div>
-
+        <div class="hero-badge">
+            <span>🎓</span> Institutional Academic Analytics Platform
         </div>
 
-    </div>
+        <h1>Student Performance & Analytics System</h1>
 
-
-    <!-- ABOUT SECTION -->
-
-    <div class="section" id="about">
-
-        <h2>About the System</h2>
-
-        <p class="about-text">
-
-            The Student Performance & Analytics System is a
-            web-based application developed using Django.
-
-            It helps manage student information, subject
-            details and academic marks.
-
-            The system also provides performance analysis,
-            overall statistics, grades, CGPA and graphical
-            representations of student results.
-
+        <p>
+            An advanced institutional portal engineered to monitor student progress, evaluate subject performance, compute academic rankings, visualize analytics with Chart.js, and generate official downloadable PDF reports.
         </p>
 
+        <div class="hero-actions">
+            {% if user.is_authenticated and user.is_staff %}
+                <a href="{% url 'dashboard' %}" class="btn-primary">
+                    Launch Admin Dashboard →
+                </a>
+                <a href="{% url 'student_list' %}" class="btn-secondary">
+                    View Student Records
+                </a>
+            {% else %}
+                <a href="{% url 'admin_login' %}" class="btn-primary">
+                    Admin Login →
+                </a>
+                <a href="#features" class="btn-secondary">
+                    Explore System Features ↓
+                </a>
+            {% endif %}
+        </div>
+
+        <!-- HIGHLIGHT STRIP -->
+        <div class="highlight-strip">
+            <div class="highlight-item">
+                <span>👥</span> Complete Student Profiles
+            </div>
+            <div class="highlight-item">
+                <span>🏆</span> Academic Ranking & Leaderboard
+            </div>
+            <div class="highlight-item">
+                <span>📊</span> Real-Time Chart.js Visualizations
+            </div>
+            <div class="highlight-item">
+                <span>📄</span> ReportLab PDF Transcripts
+            </div>
+        </div>
     </div>
 
+    <!-- FEATURES SECTION -->
+    <div class="section" id="features">
+        <div class="section-header">
+            <h2>Core System Capabilities</h2>
+            <p>Comprehensive features built for academic staff, administrators, and department heads.</p>
+        </div>
 
-    <!-- FOOTER -->
+        <div class="feature-grid">
+            <div class="card" style="--accent: #2563eb;">
+                <div>
+                    <span class="card-icon">👥</span>
+                    <h3>Student Record Management</h3>
+                    <p>
+                        Maintain student biographical records including Student IDs, official full names, registered emails, dates of birth, and assigned academic departments.
+                    </p>
+                </div>
+                <a href="{% url 'student_list' %}" class="card-link">
+                    Manage Student Records →
+                </a>
+            </div>
 
-   
+            <div class="card" style="--accent: #10b981;">
+                <div>
+                    <span class="card-icon">📝</span>
+                    <h3>Marks & Subject Evaluation</h3>
+                    <p>
+                        Track academic subject codes and score allocations. Compute subject-level averages, highest and lowest scores, and individual subject pass rates.
+                    </p>
+                </div>
+                <a href="{% url 'dashboard' %}" class="card-link">
+                    View Subject Evaluations →
+                </a>
+            </div>
+
+            <div class="card" style="--accent: #8b5cf6;">
+                <div>
+                    <span class="card-icon">🏆</span>
+                    <h3>Academic Ranking System</h3>
+                    <p>
+                        Automated academic standings based on percentages and CGPA. Features Top 3 Gold, Silver, and Bronze podium highlights and a complete leaderboard.
+                    </p>
+                </div>
+                <a href="{% url 'dashboard' %}" class="card-link">
+                    Explore Leaderboard & Rankings →
+                </a>
+            </div>
+
+            <div class="card" style="--accent: #f59e0b;">
+                <div>
+                    <span class="card-icon">📊</span>
+                    <h3>Interactive Chart Visualizations</h3>
+                    <p>
+                        Multi-dimensional graphical analysis using Chart.js, including pass/fail distribution pie charts and comparative subject performance bar charts.
+                    </p>
+                </div>
+                <a href="{% url 'dashboard' %}" class="card-link">
+                    Open Graphical Analytics →
+                </a>
+            </div>
+
+            <div class="card" style="--accent: #ec4899;">
+                <div>
+                    <span class="card-icon">📄</span>
+                    <h3>Official PDF Transcripts</h3>
+                    <p>
+                        Generate and download professionally styled academic report cards and student performance transcripts with a single click.
+                    </p>
+                </div>
+                <a href="{% url 'student_list' %}" class="card-link">
+                    Browse & Download Reports →
+                </a>
+            </div>
+
+            <div class="card" style="--accent: #0f172a;">
+                <div>
+                    <span class="card-icon">🛡️</span>
+                    <h3>Secure Administrative Control</h3>
+                    <p>
+                        Role-based access control protecting student CRUD operations, session management, CSRF token validation, and password masking toggles.
+                    </p>
+                </div>
+                {% if user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'dashboard' %}" class="card-link">
+                        Access Admin Dashboard →
+                    </a>
+                {% else %}
+                    <a href="{% url 'admin_login' %}" class="card-link">
+                        Admin Portal Login →
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <div class="section" id="about">
+        <div class="section-header">
+            <h2>About the Platform Architecture</h2>
+            <p>Institutional technology stack and software engineering design.</p>
+        </div>
+
+        <p style="color: #475569; font-size: 15px; line-height: 1.8; margin-bottom: 20px;">
+            The <strong>Student Performance & Analytics System</strong> is an end-to-end academic software solution designed to centralize student records, evaluate marks, determine automated grade point averages (CGPA), rank students academically, and visualize departmental statistics. Built following the Model-View-Template (MVT) pattern, it guarantees data integrity, responsive visualization, and secure session management.
+        </p>
+
+        <div class="tech-grid">
+            <span class="tech-pill">🐍 Python 3.13</span>
+            <span class="tech-pill">⚡ Django 6.1</span>
+            <span class="tech-pill">🗄️ MySQL Database</span>
+            <span class="tech-pill">📊 Chart.js 4</span>
+            <span class="tech-pill">📄 ReportLab PDF Engine</span>
+            <span class="tech-pill">🛡️ CSRF & Role Authentication</span>
+        </div>
+    </div>
 
 </div>
-  
-{% include 'partials/footer.html' %}
-</body>
 
+{% include 'partials/footer.html' %}
+
+</body>
 </html>

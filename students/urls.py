@@ -13,4 +13,7 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     path(
     "students/<str:student_id>/pdf/",views.student_pdf_report,name="student_pdf_report"),
+    path("login/", views.admin_login, name="admin_login"),
+    path("admin-login/", views.admin_login, name="admin_login_alias"),
+    path("logout/", views.admin_logout, name="admin_logout"),
 ]

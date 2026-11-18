@@ -1,475 +1,891 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Student Performance</title>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ student.name }} | Student Performance Details</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
-        /* General Page Styling */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f1f5f9;
-            color: #1e293b;
-            margin: 0;
-            padding: 25px;
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748b;
+            --slate-200: #e2e8f0;
+            --slate-100: #f1f5f9;
+            --slate-50: #f8fafc;
+            --emerald-600: #16a34a;
+            --emerald-500: #10b981;
+            --emerald-50: #ecfdf5;
+            --rose-600: #e11d48;
+            --rose-50: #fff1f2;
+            --amber-600: #d97706;
+            --amber-50: #fffbeb;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --shadow-subtle: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+            --shadow-elevated: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
         }
 
-        h1 {
-            color: #1e3a8a;
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #dbeafe;
-        }
-
-        h2 {
-            color: #1e3a8a;
-            margin-bottom: 18px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #dbeafe;
-        }
-
-        .section {
-            background-color: #ffffff;
-            padding: 25px;
-            margin: 25px auto;
-            max-width: 1100px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        * {
             box-sizing: border-box;
-            transition: box-shadow 0.2s ease;
+            margin: 0;
+            padding: 0;
         }
 
-        .section:hover {
-            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--slate-50);
+            color: var(--slate-800);
+            line-height: 1.5;
+            padding: 20px 20px 40px;
+            min-height: 100vh;
         }
 
-        /* Tables */
-        .table-container {
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Breadcrumb Bar */
+        .breadcrumb-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--slate-500);
+        }
+
+        .breadcrumbs a {
+            color: var(--slate-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumbs span.separator {
+            color: var(--slate-400);
+        }
+
+        .breadcrumbs span.current {
+            color: var(--slate-900);
+            font-weight: 600;
+        }
+
+        /* Profile Hero Card */
+        .profile-hero {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--slate-200);
+            box-shadow: var(--shadow-elevated);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .profile-identity {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .avatar-circle {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            flex-shrink: 0;
+            border: 3px solid #ffffff;
+            outline: 2px solid var(--primary-light);
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .profile-name-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .profile-name {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--slate-900);
+            letter-spacing: -0.4px;
+        }
+
+        .id-badge {
+            background: var(--slate-100);
+            color: var(--slate-700);
+            border: 1px solid var(--slate-200);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: var(--radius-sm);
+        }
+
+        .dept-badge {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: var(--radius-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: var(--slate-600);
+        }
+
+        .meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meta-item svg {
+            width: 15px;
+            height: 15px;
+            color: var(--slate-400);
+        }
+
+        /* Action Buttons */
+        .profile-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .btn-pdf {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-pdf:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-edit {
+            background: #ffffff;
+            color: var(--slate-700);
+            border-color: var(--slate-200);
+        }
+
+        .btn-edit:hover {
+            background: var(--slate-100);
+            color: var(--slate-900);
+            border-color: var(--slate-300);
+            transform: translateY(-1px);
+        }
+
+        .btn-delete {
+            background: var(--rose-50);
+            color: var(--rose-600);
+            border-color: #fecdd3;
+        }
+
+        .btn-delete:hover {
+            background: #ffe4e6;
+            color: #be123c;
+            transform: translateY(-1px);
+        }
+
+        .btn-back {
+            background: var(--slate-100);
+            color: var(--slate-700);
+            border-color: var(--slate-200);
+        }
+
+        .btn-back:hover {
+            background: var(--slate-200);
+            color: var(--slate-900);
+        }
+
+        /* Performance KPI Grid */
+        .kpi-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--slate-900);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: #ffffff;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--slate-200);
+            padding: 18px 20px;
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+
+        .kpi-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--slate-500);
+        }
+
+        .kpi-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .kpi-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--slate-900);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .kpi-subtext {
+            font-size: 11px;
+            color: var(--slate-500);
+            margin-top: 4px;
+        }
+
+        /* Specialized KPI Highlights */
+        .kpi-card.kpi-result-pass {
+            background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
+            border-color: #a7f3d0;
+        }
+
+        .kpi-card.kpi-result-pass .kpi-value {
+            color: #059669;
+        }
+
+        .kpi-card.kpi-result-fail {
+            background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+            border-color: #fecaca;
+        }
+
+        .kpi-card.kpi-result-fail .kpi-value {
+            color: #dc2626;
+        }
+
+        .kpi-card.kpi-result-pending {
+            background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+            border-color: #fde68a;
+        }
+
+        .kpi-card.kpi-result-pending .kpi-value {
+            color: #d97706;
+        }
+
+        /* Performance status pill */
+        .status-pill {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            letter-spacing: 0.3px;
+        }
+
+        .status-pill-outstanding {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #86efac;
+        }
+
+        .status-pill-excellent {
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #6ee7b7;
+        }
+
+        .status-pill-very-good {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #93c5fd;
+        }
+
+        .status-pill-good {
+            background: #f0f9ff;
+            color: #0284c7;
+            border: 1px solid #7dd3fc;
+        }
+
+        .status-pill-average {
+            background: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fcd34d;
+        }
+
+        .status-pill-pass {
+            background: #ffedd5;
+            color: #c2410c;
+            border: 1px solid #fdba74;
+        }
+
+        .status-pill-needs-improvement {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+        }
+
+        /* Content Card */
+        .content-card {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--slate-200);
+            box-shadow: var(--shadow-card);
+            margin-bottom: 28px;
+            overflow: hidden;
+        }
+
+        .content-card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--slate-200);
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .content-card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--slate-900);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .count-pill {
+            background: var(--slate-100);
+            color: var(--slate-600);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 9px;
+            border-radius: 9999px;
+        }
+
+        /* Modern Table */
+        .table-responsive {
             width: 100%;
             overflow-x: auto;
         }
 
-        table {
+        table.marks-table {
             width: 100%;
             border-collapse: collapse;
-            background-color: #ffffff;
+            font-size: 14px;
+            text-align: left;
         }
 
-        th {
-            background-color: #1e3a8a;
-            color: #ffffff;
-            padding: 13px;
-            text-align: left;
+        table.marks-table thead th {
+            background-color: var(--slate-50);
+            color: var(--slate-600);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--slate-200);
             white-space: nowrap;
         }
 
-       td {
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
-            border-right: 1px solid #f1f5f9;
+        table.marks-table tbody td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--slate-200);
+            color: var(--slate-700);
             vertical-align: middle;
         }
 
-        td:last-child {
-            border-right: none;
-        }     
-        
-        .marks-column {
-            text-align: center;
+        table.marks-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.marks-table tbody tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .subject-code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-weight: 600;
+            color: var(--primary);
+            background: #eff6ff;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            font-size: 12.5px;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .marks-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 220px;
+        }
+
+        .marks-progress-track {
+            flex-grow: 1;
+            height: 7px;
+            background-color: var(--slate-100);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .marks-progress-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.3s ease;
+        }
+
+        .marks-badge {
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 38px;
+            text-align: right;
+        }
+
+        .marks-badge-pass {
+            color: #059669;
+        }
+
+        .marks-badge-fail {
+            color: #dc2626;
+        }
+
+        .status-chip-pass {
+            background: #ecfdf5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            font-size: 11.5px;
             font-weight: 600;
         }
 
-        tbody tr:hover {
-            background-color: #f8fafc;
-        }
-         
-            tbody tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-
-        
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 15px;
+        .status-chip-fail {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            font-size: 11.5px;
+            font-weight: 600;
         }
 
-        .summary-card {
-            background-color: #eff6ff;
-            border-left: 4px solid #2563eb;
-            border-radius: 7px;
-            padding: 18px;
-            overflow-wrap: anywhere;
-
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        /* Empty State */
+        .empty-state {
+            padding: 50px 20px;
+            text-align: center;
+            color: var(--slate-500);
         }
 
-        .summary-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
-        }        
-        .summary-label {
-            display: block;
-            color: #475569;
-            font-size: 14px;
-            margin-bottom: 8px;
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            opacity: 0.7;
         }
 
-        .summary-value {
-        display: block;
-        color: #1e3a8a;
-        font-size: 21px;
-        font-weight: bold;
-        overflow-wrap: anywhere;
-    }
-
-    /* Result and performance status colors */
-    .status-pass {
-        color: #15803d;
-    }
-
-    .status-fail {
-        color: #dc2626;
-    }
-
-    .status-average {
-        color: #b45309;
-    }
-
-    /* Performance status card backgrounds */
-
-.performance-card.status-outstanding {
-    background-color: #dcfce7;
-    border-left-color: #15803d;
-}
-
-.performance-card.status-excellent {
-    background-color: #ecfdf5;
-    border-left-color: #059669;
-}
-
-.performance-card.status-very-good {
-    background-color: #dbeafe;
-    border-left-color: #2563eb;
-}
-
-.performance-card.status-good {
-    background-color: #e0f2fe;
-    border-left-color: #0284c7;
-}
-
-.performance-card.status-average {
-    background-color: #fef3c7;
-    border-left-color: #d97706;
-}
-
-.performance-card.status-pass {
-    background-color: #ffedd5;
-    border-left-color: #ea580c;
-}
-
-.performance-card.status-needs-improvement {
-    background-color: #fee2e2;
-    border-left-color: #dc2626;
-}
-
-    /* Highlight the final result card */
-.result-card {
-    background-color: #f0fdf4;
-    border-left-color: #15803d;
-}
-
-.result-card.result-fail {
-    background-color: #fef2f2;
-    border-left-color: #dc2626;
-}
-
-.result-card.result-no-result {
-    background-color: #fffbeb;
-    border-left-color: #d97706;
-}
-
-.result-card .summary-value {
-    font-size: 24px;
-    padding: 4px 0;
-}
-
-        /* Navigation Buttons */
-        .navigation {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 20px;
+        .empty-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--slate-700);
+            margin-bottom: 6px;
         }
 
-        .button {
-            display: inline-block;
-            background-color: #2563eb;
-            color: #ffffff;
-            padding: 11px 18px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-
-            transition: background-color 0.2s ease,
-                        transform 0.2s ease,
-                        box-shadow 0.2s ease;
-        }        
-
-        .button:hover {
-            background-color: #1d4ed8;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .button:focus-visible {
-            outline: 3px solid #f59e0b;
-            outline-offset: 3px;
-        }
-
-        .secondary-button {
-            background-color: #475569;
-        }
-
-        .secondary-button:hover {
-            background-color: #334155;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 700px) {
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
             body {
-                padding: 12px;
+                padding: 12px 10px 30px;
             }
 
-            .section {
-                padding: 16px;
-                margin: 16px auto;
-            }
-
-            .summary-grid {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 25px;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
-
-            .navigation {
+            .profile-hero {
+                padding: 20px;
                 flex-direction: column;
+                align-items: flex-start;
             }
 
-            .button {
-                text-align: center;
+            .profile-actions {
+                width: 100%;
+            }
+
+            .profile-actions .btn {
+                flex: 1 1 auto;
+                justify-content: center;
+            }
+
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body>
 
-    <h1>Student Performance System</h1>
+    <div class="page-container">
 
-    <div class="section">
+        <!-- UNIFIED NAVBAR -->
+        {% include 'partials/navbar.html' %}
 
-        <h2>{{ student.name }} - Performance</h2>
+        <!-- FLASH MESSAGES -->
+        {% include 'partials/messages.html' %}
 
-        <div class="navigation">
-            <a class="button secondary-button"
-               href="{% url 'student_list' %}">
-                ← Back to Student List
-            </a>
-
-            <a class="button"
-               href="{% url 'dashboard' %}">
-                Back to Dashboard
-            </a>
-
-            <a class="button"
-               href="{% url 'home' %}">
-                Back to Home
-            </a>
-
-            <a class="button"
-              href="{% url 'student_pdf_report' student.student_id %}"
-              style="background-color: #15803d;">
-
-               📄 Download PDF Report
-
-            </a>
-            
+        <!-- BREADCRUMB BAR -->
+        <div class="breadcrumb-bar">
+            <div class="breadcrumbs">
+                <a href="{% url 'home' %}">Home</a>
+                <span class="separator">/</span>
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <span class="separator">/</span>
+                <a href="{% url 'student_list' %}">Students</a>
+                <span class="separator">/</span>
+                <span class="current">{{ student.name }}</span>
+            </div>
+            <div>
+                <a href="{% url 'student_list' %}" class="btn btn-back">
+                    ← Back to All Students
+                </a>
+            </div>
         </div>
 
-    </div>
+        <!-- PROFILE HERO CARD -->
+        <div class="profile-hero">
+            <div class="profile-identity">
+                <div class="avatar-circle">
+                    {{ student.name|slice:":1"|upper }}
+                </div>
+                <div class="profile-details">
+                    <div class="profile-name-row">
+                        <h1 class="profile-name">{{ student.name }}</h1>
+                        <span class="id-badge">ID: {{ student.student_id }}</span>
+                        <span class="dept-badge">{{ student.department }}</span>
+                    </div>
+                    <div class="profile-meta-row">
+                        <div class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span>{{ student.email }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span>DOB: {{ student.date_of_birth }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- ACTIONS -->
+            <div class="profile-actions">
+                <a href="{% url 'student_pdf_report' student.student_id %}" class="btn btn-pdf"
+                    title="Download official PDF report">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Download PDF Report
+                </a>
 
-    <!-- STUDENT INFORMATION -->
+                {% if user.is_authenticated and user.is_staff %}
+                <a href="{% url 'student_edit' student.student_id %}" class="btn btn-edit" title="Edit student profile">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Edit
+                </a>
 
-    <div class="section">
-
-        <h2>Student Information</h2>
-
-        <div class="table-container">
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Date of Birth</th>
-                        <th>Department</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td><strong>{{ student.student_id }}</strong></td>
-                         <td><strong>{{ student.name }}</strong></td>
-                        <td>{{ student.email }}</td>
-                        <td>{{ student.date_of_birth }}</td>
-                        <td>{{ student.department }}</td>
-                    </tr>
-                </tbody>
-            </table>
-
+                <a href="{% url 'student_delete' student.student_id %}" class="btn btn-delete"
+                    title="Delete student record">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Delete
+                </a>
+                {% endif %}
+            </div>
         </div>
 
-    </div>
+        <!-- PERFORMANCE SUMMARY SECTION -->
+        <h2 class="kpi-section-title">
+            <span>📊</span> Performance Summary & Analytics
+        </h2>
 
+        <div class="kpi-grid">
+            <!-- Total Marks -->
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">Total Marks</span>
+                    <span class="kpi-icon">🎯</span>
+                </div>
+                <div class="kpi-value">{{ total_marks }}</div>
+                <div class="kpi-subtext">Across all enrolled subjects</div>
+            </div>
 
-    <!-- SUBJECT-WISE MARKS -->
+            <!-- Average Marks -->
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">Average</span>
+                    <span class="kpi-icon">📊</span>
+                </div>
+                <div class="kpi-value">{{ average_marks }}</div>
+                <div class="kpi-subtext">Mean marks scored</div>
+            </div>
 
-    <div class="section">
+            <!-- Percentage -->
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">Percentage</span>
+                    <span class="kpi-icon">📈</span>
+                </div>
+                <div class="kpi-value">{{ percentage }}%</div>
+                <div class="kpi-subtext">Academic aggregate</div>
+            </div>
 
-        <h2>Subject-wise Marks</h2>
+            <!-- CGPA -->
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">CGPA</span>
+                    <span class="kpi-icon">🎓</span>
+                </div>
+                <div class="kpi-value">{{ cgpa }}</div>
+                <div class="kpi-subtext">Scale of 10.0</div>
+            </div>
 
-        {% if marks %}
+            <!-- Grade -->
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">Grade</span>
+                    <span class="kpi-icon">🏷️</span>
+                </div>
+                <div class="kpi-value">{{ grade }}</div>
+                <div class="kpi-subtext">Institutional scale</div>
+            </div>
 
-            <div class="table-container">
+            <!-- Performance Status -->
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">Evaluation</span>
+                    <span class="kpi-icon">⚡</span>
+                </div>
+                <div style="margin-top: 6px;">
+                    <span class="status-pill
+                        {% if performance_status == 'Outstanding' %}status-pill-outstanding
+                        {% elif performance_status == 'Excellent' %}status-pill-excellent
+                        {% elif performance_status == 'Very Good' %}status-pill-very-good
+                        {% elif performance_status == 'Good' %}status-pill-good
+                        {% elif performance_status == 'Average' %}status-pill-average
+                        {% elif performance_status == 'Pass' %}status-pill-pass
+                        {% else %}status-pill-needs-improvement{% endif %}">
+                        {{ performance_status }}
+                    </span>
+                </div>
+                <div class="kpi-subtext" style="margin-top: 8px;">Standard assessment</div>
+            </div>
 
-                <table>
+            <!-- Final Result -->
+            <div class="kpi-card
+                {% if result_status == 'PASS' %}kpi-result-pass
+                {% elif result_status == 'FAIL' %}kpi-result-fail
+                {% else %}kpi-result-pending{% endif %}">
+                <div class="kpi-header">
+                    <span class="kpi-label">Result</span>
+                    <span class="kpi-icon">🏆</span>
+                </div>
+                <div class="kpi-value">{{ result_status }}</div>
+                <div class="kpi-subtext">
+                    {% if result_status == 'PASS' %}All subjects cleared (≥ 40)
+                    {% elif result_status == 'FAIL' %}Subject(s) below passing mark
+                    {% else %}Marks yet to be recorded{% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBJECT-WISE MARKS TABLE -->
+        <div class="content-card">
+            <div class="content-card-header">
+                <div class="content-card-title">
+                    <span>📚</span>
+                    <span>Subject-wise Marks Evaluation</span>
+                    <span class="count-pill">{{ marks|length }} Subjects</span>
+                </div>
+                <div>
+                    <a href="{% url 'dashboard' %}" class="btn btn-back" style="padding: 6px 14px; font-size: 12.5px;">
+                        View System Charts →
+                    </a>
+                </div>
+            </div>
+
+            {% if marks %}
+            <div class="table-responsive">
+                <table class="marks-table">
                     <thead>
                         <tr>
-                            <th>Subject Code</th>
-                            <th>Subject</th>
-                            <th class="marks-column">Marks</th>
+                            <th style="width: 140px;">Code</th>
+                            <th>Subject Name</th>
+                            <th style="width: 260px;">Score & Progress</th>
+                            <th style="width: 120px; text-align: center;">Status</th>
+                        </tr>
                     </thead>
-
                     <tbody>
                         {% for mark in marks %}
                         <tr>
-                            <td>{{ mark.subject.code }}</td>
-                            <td>{{ mark.subject.name }}</td>
-                            <td class="marks-column">{{ mark.marks }}</td>
+                            <td>
+                                <span class="subject-code">{{ mark.subject.code }}</span>
+                            </td>
+                            <td>
+                                <div class="subject-name">{{ mark.subject.name }}</div>
+                            </td>
+                            <td>
+                                <div class="marks-bar-container">
+                                    <div class="marks-progress-track">
+                                        <div class="marks-progress-fill"
+                                            style="width: {{ mark.marks }}%;
+                                                            background-color: {% if mark.marks >= 75 %}#10b981{% elif mark.marks >= 50 %}#3b82f6{% elif mark.marks >= 40 %}#f59e0b{% else %}#ef4444{% endif %};">
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="marks-badge {% if mark.marks >= 40 %}marks-badge-pass{% else %}marks-badge-fail{% endif %}">
+                                        {{ mark.marks }}
+                                        <span style="font-size: 11px; font-weight: normal; color: var(--slate-400);">/
+                                            100</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                {% if mark.marks >= 40 %}
+                                <span class="status-chip-pass">✓ PASS</span>
+                                {% else %}
+                                <span class="status-chip-fail">✗ FAIL</span>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-
             </div>
-
-        {% else %}
-
-            <p>No marks found for this student.</p>
-
-        {% endif %}
-
-    </div>
-
-
-    <!-- PERFORMANCE SUMMARY -->
-
-    <div class="section">
-
-        <h2>Performance Summary</h2>
-
-        <div class="summary-grid">
-
-            <div class="summary-card">
-                <span class="summary-label">Total Marks</span>
-                <span class="summary-value">{{ total_marks }}</span>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📝</div>
+                <div class="empty-title">No Marks Recorded</div>
+                <p>There are currently no examination or assessment marks recorded for this student.</p>
             </div>
-
-            <div class="summary-card">
-                <span class="summary-label">Average Marks</span>
-                <span class="summary-value">{{ average_marks }}</span>
-            </div>
-
-            <div class="summary-card">
-                <span class="summary-label">Percentage</span>
-                <span class="summary-value">{{ percentage }}%</span>
-            </div>
-
-            <div class="summary-card">
-                <span class="summary-label">CGPA</span>
-                <span class="summary-value">{{ cgpa }}</span>
-            </div>
-
-            <div class="summary-card">
-                <span class="summary-label">Grade</span>
-                <span class="summary-value">{{ grade }}</span>
-            </div>
-
-            <div class="summary-card performance-card
-    {% if performance_status == 'Outstanding' %}
-        status-outstanding
-    {% elif performance_status == 'Excellent' %}
-        status-excellent
-    {% elif performance_status == 'Very Good' %}
-        status-very-good
-    {% elif performance_status == 'Good' %}
-        status-good
-    {% elif performance_status == 'Average' %}
-        status-average
-    {% elif performance_status == 'Pass' %}
-        status-pass
-    {% elif performance_status == 'Needs Improvement' %}
-        status-needs-improvement
-    {% endif %}">
-        <span class="summary-label">Performance Status</span>
-
-        <span class="summary-value
-          {% if performance_status == 'Excellent' %}
-            status-pass
-          {% elif performance_status == 'Average' %}
-            status-average
-         {% elif performance_status == 'Poor' %}
-            status-fail
-          {% endif %}">
-                {{ performance_status }}
-        </span>
-    </div>
-
-    <div class="summary-card result-card
-        {% if result_status == 'FAIL' %}
-            result-fail
-        {% elif result_status == 'NO RESULT' %}
-            result-no-result
-        {% endif %}">
-         <span class="summary-label">Result</span>
-
-      <span class="summary-value
-           {% if result_status == 'PASS' %}
-               status-pass
-           {% elif result_status == 'FAIL' %}
-              status-fail
-          {% else %}
-              status-average
-          {% endif %}">
-          {{ result_status }}
-         </span>
-     </div>
-
+            {% endif %}
         </div>
 
     </div>
-{% include 'partials/footer.html' %}
+
+    <!-- MODERN FOOTER -->
+    {% include 'partials/footer.html' %}
 
 </body>
+
 </html>

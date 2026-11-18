@@ -3,202 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Student | {{ student.name }}</title>
 
-    <title>Delete Student</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            margin: 0;
-            padding: 30px;
+        :root {
+            --primary: #2563eb;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748b;
+            --slate-200: #e2e8f0;
+            --slate-100: #f1f5f9;
+            --slate-50: #f8fafc;
+            --rose-600: #e11d48;
+            --rose-700: #be123c;
+            --rose-50: #fff1f2;
+            --rose-100: #ffe4e6;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --shadow-elevated: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
         }
 
-        .confirmation-container {
-            max-width: 500px;
-            width: 100%;
+        * {
             box-sizing: border-box;
-            margin: 60px auto;
-            padding: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--slate-50);
+            color: var(--slate-800);
+            line-height: 1.5;
+            padding: 20px 20px 40px;
+            min-height: 100vh;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Breadcrumb Bar */
+        .breadcrumb-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+            font-size: 13px;
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--slate-500);
+        }
+
+        .breadcrumbs a {
+            color: var(--slate-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumbs span.separator {
+            color: var(--slate-400);
+        }
+
+        .breadcrumbs span.current {
+            color: var(--rose-600);
+            font-weight: 600;
+        }
+
+        /* Delete Dialog Card */
+        .delete-card {
+            max-width: 540px;
+            margin: 20px auto 40px;
             background: #ffffff;
-            border-radius: 12px;
-            border-top: 5px solid #dc3545;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--slate-200);
+            box-shadow: var(--shadow-elevated);
+            overflow: hidden;
             text-align: center;
-}
-
-        h1 {
-            color: #dc3545;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 15px;
-}
-
-        .student-info {
-            margin: 20px 0;
-            padding: 18px;
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            text-align: left;
         }
 
-        .student-info p {
-            margin: 10px 0;
-            color: #343a40;
-            font-size: 15px;
-            line-height: 1.6;
+        .delete-header {
+            padding: 32px 32px 20px;
+            background: linear-gradient(to bottom, #ffffff, var(--slate-50));
+            border-bottom: 1px solid var(--slate-200);
         }
 
-        .student-info strong {
-            color: #1f3c88;
+        .danger-badge {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background-color: var(--rose-50);
+            color: var(--rose-600);
+            border: 2px solid var(--rose-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.15);
         }
 
-        .warning {
-            color: #842029;
-            background: #fff0f0;
-            border: 1px solid #f5c2c7;
-            border-left: 5px solid #dc3545;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 20px 0;
-            text-align: left;
-            line-height: 1.6;
+        .danger-badge svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .delete-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--slate-900);
+            letter-spacing: -0.3px;
+            margin-bottom: 6px;
+        }
+
+        .delete-subtitle {
             font-size: 14px;
+            color: var(--slate-500);
         }
 
-        .warning strong {
+        .delete-body {
+            padding: 24px 32px 32px;
+            text-align: left;
+        }
+
+        /* Student Record Preview */
+        .preview-box {
+            background-color: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .preview-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--slate-200);
+            font-size: 13.5px;
+        }
+
+        .preview-row:last-child {
+            border-bottom: none;
+        }
+
+        .preview-label {
+            color: var(--slate-500);
+            font-weight: 500;
+        }
+
+        .preview-value {
+            color: var(--slate-900);
+            font-weight: 600;
+        }
+
+        /* Caution Notice */
+        .caution-banner {
+            background-color: var(--rose-50);
+            border-left: 4px solid var(--rose-600);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--rose-700);
+            line-height: 1.5;
+        }
+
+        .caution-banner strong {
             display: block;
-            margin-bottom: 5px;
-            font-size: 15px;
+            margin-bottom: 2px;
+            color: #9f1239;
         }
 
-        .button {
-            display: inline-block;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 5px;
+        /* Form Actions */
+        .dialog-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 11px 22px;
+            border-radius: var(--radius-md);
             text-decoration: none;
             cursor: pointer;
-            font-size: 15px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
         }
 
-        .delete-button {
-            background: #dc3545;
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);
+        .btn-delete {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
         }
 
-        .cancel-button {
-            background: #6c757d;
-            color: white;
-            margin-left: 8px;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(108, 117, 125, 0.2);
+        .btn-delete:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(225, 29, 72, 0.35);
         }
 
-        .delete-button:hover {
-            background: #bb2d3b;
+        .btn-cancel {
+            background: var(--slate-100);
+            color: var(--slate-700);
+            border-color: var(--slate-200);
         }
 
-        .cancel-button:hover {
-                   background: #565e64;
+        .btn-cancel:hover {
+            background: var(--slate-200);
+            color: var(--slate-900);
         }
 
-        .button:hover {
-             opacity: 0.95;
+        @media (max-width: 600px) {
+            body {
+                padding: 12px 10px 30px;
+            }
+
+            .delete-card {
+                margin: 10px auto;
+            }
+
+            .delete-header {
+                padding: 24px 20px 16px;
+            }
+
+            .delete-body {
+                padding: 20px;
+            }
+
+            .dialog-actions {
+                flex-direction: column-reverse;
+            }
+
+            .dialog-actions .btn {
+                width: 100%;
+            }
         }
-
-        /* Responsive Delete Confirmation Page */
-@media (max-width: 600px) {
-
-    body {
-        padding: 12px;
-    }
-
-    .confirmation-container {
-        margin: 20px auto;
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    .student-info {
-        padding: 12px;
-        overflow-wrap: anywhere;
-    }
-
-    .button {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-        margin: 10px 0;
-    }
-
-    .cancel-button {
-        margin-left: 0;
-    }
-}
     </style>
 </head>
-
 <body>
 
-    <div class="confirmation-container">
+    <div class="page-container">
 
-        <h1>Delete Student?</h1>
+        <!-- UNIFIED NAVBAR -->
+        {% include 'partials/navbar.html' %}
 
-        <p>Are you sure you want to delete this student?</p>
+        <!-- FLASH MESSAGES -->
+        {% include 'partials/messages.html' %}
 
-        <div class="student-info">
-
-            <p>
-                <strong>Student ID:</strong>
-                {{ student.student_id }}
-            </p>
-
-            <p>
-                <strong>Name:</strong>
-                {{ student.name }}
-            </p>
-
-            <p>
-                <strong>Email:</strong>
-                {{ student.email }}
-            </p>
-
-            <p>
-                <strong>Department:</strong>
-                {{ student.department }}
-            </p>
-
+        <!-- BREADCRUMBS -->
+        <div class="breadcrumb-bar">
+            <div class="breadcrumbs">
+                <a href="{% url 'home' %}">Home</a>
+                <span class="separator">/</span>
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <span class="separator">/</span>
+                <a href="{% url 'student_list' %}">Students</a>
+                <span class="separator">/</span>
+                <span class="current">Delete {{ student.name }}</span>
+            </div>
+            <div>
+                <a href="{% url 'student_detail' student.student_id %}" class="btn btn-cancel" style="padding: 7px 14px; font-size: 13px;">
+                    ← Back to Details
+                </a>
+            </div>
         </div>
 
-        <div class="warning">
-            <strong>Warning:</strong>
-            Deleting this student will also delete their associated marks.
-            This action cannot be undone.
+        <!-- DELETION CARD -->
+        <div class="delete-card">
+            <div class="delete-header">
+                <div class="danger-badge">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                </div>
+                <h1 class="delete-title">Delete Student Record</h1>
+                <p class="delete-subtitle">Confirm permanent removal of this student from the institution database.</p>
+            </div>
+
+            <div class="delete-body">
+                <!-- RECORD PREVIEW -->
+                <div class="preview-box">
+                    <div class="preview-row">
+                        <span class="preview-label">Student ID</span>
+                        <span class="preview-value" style="font-family: ui-monospace, monospace;">{{ student.student_id }}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Full Name</span>
+                        <span class="preview-value">{{ student.name }}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Department</span>
+                        <span class="preview-value">{{ student.department }}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Email Address</span>
+                        <span class="preview-value">{{ student.email }}</span>
+                    </div>
+                </div>
+
+                <!-- WARNING NOTICE -->
+                <div class="caution-banner">
+                    <strong>Permanent Action Warning</strong>
+                    Deleting this student will permanently erase all associated academic marks, grades, and analytics history. This operation cannot be reversed.
+                </div>
+
+                <!-- ACTION FORM -->
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="dialog-actions">
+                        <a href="{% url 'student_detail' student.student_id %}" class="btn btn-cancel">
+                            Cancel, Keep Record
+                        </a>
+                        <button type="submit" class="btn btn-delete">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                            Yes, Permanently Delete
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <button type="submit" class="button delete-button">
-                Yes, Delete Student
-            </button>
-
-            <a href="{% url 'student_detail' student.student_id %}"
-               class="button cancel-button">
-                Cancel
-            </a>
-
-        </form>
 
     </div>
+
+    <!-- MODERN FOOTER -->
+    {% include 'partials/footer.html' %}
 
 </body>
 </html>

@@ -1,0 +1,49 @@
+{% if messages %}
+<div class="messages-container" style="max-width: 1200px; margin: 0 auto 20px auto;">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:'info' }}" style="
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            {% if message.tags == 'success' %}
+                background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0;
+            {% elif message.tags == 'warning' %}
+                background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a;
+            {% elif message.tags == 'error' %}
+                background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca;
+            {% else %}
+                background-color: #e0f2fe; color: #075985; border: 1px solid #bae6fd;
+            {% endif %}
+        ">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                {% if message.tags == 'success' %}
+                    <span style="font-weight: bold; font-size: 16px;">✓</span>
+                {% elif message.tags == 'error' %}
+                    <span style="font-weight: bold; font-size: 16px;">⚠</span>
+                {% elif message.tags == 'warning' %}
+                    <span style="font-weight: bold; font-size: 16px;">!</span>
+                {% else %}
+                    <span style="font-weight: bold; font-size: 16px;">ℹ</span>
+                {% endif %}
+                <span>{{ message }}</span>
+            </div>
+            <button type="button" onclick="this.parentElement.style.display='none'" style="
+                background: none;
+                border: none;
+                font-size: 20px;
+                line-height: 1;
+                cursor: pointer;
+                color: inherit;
+                opacity: 0.7;
+                padding: 0 4px;
+            ">&times;</button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
