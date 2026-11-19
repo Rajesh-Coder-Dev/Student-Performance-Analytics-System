@@ -96,14 +96,39 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
+import re
+import urllib.parse
+
+def _sanitize_database_url(raw_url: str | None) -> str | None:
+    if not raw_url:
+        return raw_url
+    raw_url = raw_url.strip().strip('"').strip("'")
+    try:
+        dj_database_url.parse(raw_url)
+        return raw_url
+    except Exception:
+        pass
+    # Automatically strip brackets and URL-encode special characters in password
+    m = re.match(r'^(?P<pfx>[a-zA-Z0-9+_-]+://[^:]+:)(?P<pwd>.*)@(?P<sfx>[^@]+)$', raw_url)
+    if m:
+        pwd = m.group('pwd').removeprefix('[').removesuffix(']')
+        encoded_pwd = urllib.parse.quote(urllib.parse.unquote(pwd), safe='')
+        candidate = f"{m.group('pfx')}{encoded_pwd}@{m.group('sfx')}"
+        try:
+            dj_database_url.parse(candidate)
+            return candidate
+        except Exception:
+            pass
+    return raw_url
+
+DATABASE_URL = _sanitize_database_url(os.environ.get('DATABASE_URL'))
 
 if DATABASE_URL:
     # Production / Cloud Database (Supabase PostgreSQL, Render, etc.)
     is_postgres = DATABASE_URL.startswith(('postgres://', 'postgresql://'))
     DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
+        'default': dj_database_url.parse(
+            DATABASE_URL,
             conn_max_age=600,
             conn_health_checks=True,
             ssl_require=is_postgres,
