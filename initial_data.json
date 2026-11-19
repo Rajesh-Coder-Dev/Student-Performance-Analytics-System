@@ -1,0 +1,700 @@
+[
+{
+  "model": "students.student",
+  "pk": 1,
+  "fields": {
+    "student_id": "STU001",
+    "name": "Janmejaye Lenka",
+    "email": "lenka123@gmail.com",
+    "date_of_birth": "2005-12-23",
+    "department": "CS"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 2,
+  "fields": {
+    "student_id": "STU002",
+    "name": "Jeet Kumar Das",
+    "email": "jeet123@gmail.com",
+    "date_of_birth": "2005-02-10",
+    "department": "CS"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 3,
+  "fields": {
+    "student_id": "STU003",
+    "name": "Rakesh Kumar Mohanty",
+    "email": "rakesh123@gmail.com",
+    "date_of_birth": "2006-02-19",
+    "department": "CS"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 4,
+  "fields": {
+    "student_id": "STU004",
+    "name": "Manas Das",
+    "email": "manas123@gmail.com",
+    "date_of_birth": "2006-10-05",
+    "department": "cs"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 9,
+  "fields": {
+    "student_id": "STU008",
+    "name": "Saurav Jena",
+    "email": "saurav123@gmail.com",
+    "date_of_birth": "2002-01-28",
+    "department": "CS"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 10,
+  "fields": {
+    "student_id": "STU009",
+    "name": "Sidhu Lala",
+    "email": "sidhu123@gmail.com",
+    "date_of_birth": "2008-10-29",
+    "department": "CS"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 11,
+  "fields": {
+    "student_id": "STU_010",
+    "name": "Subrat Behera",
+    "email": "subrat123@gmail.com",
+    "date_of_birth": "2003-07-08",
+    "department": "Cs"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 12,
+  "fields": {
+    "student_id": "STU_011",
+    "name": "Rohit Jena",
+    "email": "rohit123@gmail.com",
+    "date_of_birth": "2006-04-14",
+    "department": "CS"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 13,
+  "fields": {
+    "student_id": "STU_012",
+    "name": "Himanshu Das",
+    "email": "himanshu123@gmail.com",
+    "date_of_birth": "2006-11-10",
+    "department": "CS"
+  }
+},
+{
+  "model": "students.student",
+  "pk": 14,
+  "fields": {
+    "student_id": "STU_013",
+    "name": "Bikash Shaoo",
+    "email": "bikash123@gmail.com",
+    "date_of_birth": "2006-11-30",
+    "department": "CS"
+  }
+},
+{
+  "model": "students.subject",
+  "pk": 1,
+  "fields": {
+    "code": "DAA",
+    "name": "Design and Analysis of Algorithms"
+  }
+},
+{
+  "model": "students.subject",
+  "pk": 2,
+  "fields": {
+    "code": "DSA",
+    "name": "Data Structures and Algorithms"
+  }
+},
+{
+  "model": "students.subject",
+  "pk": 3,
+  "fields": {
+    "code": "DATABASE",
+    "name": "Database"
+  }
+},
+{
+  "model": "students.subject",
+  "pk": 4,
+  "fields": {
+    "code": "TOC",
+    "name": "Theory of Computation"
+  }
+},
+{
+  "model": "students.subject",
+  "pk": 5,
+  "fields": {
+    "code": "AIML",
+    "name": "Artificial Intelligence and Machine Learning"
+  }
+},
+{
+  "model": "students.subject",
+  "pk": 6,
+  "fields": {
+    "code": "DM",
+    "name": "Discrete Mathematics"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 1,
+  "fields": {
+    "student": 1,
+    "subject": 1,
+    "marks": "85.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 2,
+  "fields": {
+    "student": 1,
+    "subject": 2,
+    "marks": "78.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 3,
+  "fields": {
+    "student": 1,
+    "subject": 3,
+    "marks": "82.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 5,
+  "fields": {
+    "student": 1,
+    "subject": 5,
+    "marks": "88.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 6,
+  "fields": {
+    "student": 1,
+    "subject": 6,
+    "marks": "80.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 7,
+  "fields": {
+    "student": 1,
+    "subject": 4,
+    "marks": "75.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 9,
+  "fields": {
+    "student": 2,
+    "subject": 1,
+    "marks": "20.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 10,
+  "fields": {
+    "student": 2,
+    "subject": 2,
+    "marks": "57.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 11,
+  "fields": {
+    "student": 2,
+    "subject": 3,
+    "marks": "90.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 12,
+  "fields": {
+    "student": 2,
+    "subject": 4,
+    "marks": "99.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 13,
+  "fields": {
+    "student": 2,
+    "subject": 5,
+    "marks": "68.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 14,
+  "fields": {
+    "student": 2,
+    "subject": 6,
+    "marks": "99.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 17,
+  "fields": {
+    "student": 4,
+    "subject": 1,
+    "marks": "65.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 18,
+  "fields": {
+    "student": 4,
+    "subject": 2,
+    "marks": "45.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 19,
+  "fields": {
+    "student": 4,
+    "subject": 3,
+    "marks": "30.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 20,
+  "fields": {
+    "student": 4,
+    "subject": 4,
+    "marks": "40.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 21,
+  "fields": {
+    "student": 4,
+    "subject": 5,
+    "marks": "25.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 22,
+  "fields": {
+    "student": 4,
+    "subject": 6,
+    "marks": "31.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 23,
+  "fields": {
+    "student": 9,
+    "subject": 1,
+    "marks": "40.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 24,
+  "fields": {
+    "student": 9,
+    "subject": 2,
+    "marks": "45.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 25,
+  "fields": {
+    "student": 9,
+    "subject": 3,
+    "marks": "46.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 26,
+  "fields": {
+    "student": 9,
+    "subject": 4,
+    "marks": "50.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 27,
+  "fields": {
+    "student": 9,
+    "subject": 5,
+    "marks": "42.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 28,
+  "fields": {
+    "student": 9,
+    "subject": 6,
+    "marks": "51.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 29,
+  "fields": {
+    "student": 11,
+    "subject": 1,
+    "marks": "60.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 30,
+  "fields": {
+    "student": 11,
+    "subject": 2,
+    "marks": "65.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 31,
+  "fields": {
+    "student": 11,
+    "subject": 3,
+    "marks": "50.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 32,
+  "fields": {
+    "student": 11,
+    "subject": 4,
+    "marks": "70.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 33,
+  "fields": {
+    "student": 11,
+    "subject": 5,
+    "marks": "75.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 34,
+  "fields": {
+    "student": 11,
+    "subject": 6,
+    "marks": "63.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 35,
+  "fields": {
+    "student": 12,
+    "subject": 1,
+    "marks": "65.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 36,
+  "fields": {
+    "student": 12,
+    "subject": 2,
+    "marks": "40.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 37,
+  "fields": {
+    "student": 12,
+    "subject": 3,
+    "marks": "80.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 38,
+  "fields": {
+    "student": 12,
+    "subject": 4,
+    "marks": "60.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 39,
+  "fields": {
+    "student": 12,
+    "subject": 5,
+    "marks": "39.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 40,
+  "fields": {
+    "student": 12,
+    "subject": 6,
+    "marks": "90.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 41,
+  "fields": {
+    "student": 13,
+    "subject": 1,
+    "marks": "60.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 42,
+  "fields": {
+    "student": 13,
+    "subject": 2,
+    "marks": "69.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 43,
+  "fields": {
+    "student": 13,
+    "subject": 3,
+    "marks": "58.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 44,
+  "fields": {
+    "student": 13,
+    "subject": 4,
+    "marks": "84.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 45,
+  "fields": {
+    "student": 13,
+    "subject": 5,
+    "marks": "47.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 46,
+  "fields": {
+    "student": 13,
+    "subject": 6,
+    "marks": "95.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 47,
+  "fields": {
+    "student": 14,
+    "subject": 1,
+    "marks": "69.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 48,
+  "fields": {
+    "student": 14,
+    "subject": 2,
+    "marks": "45.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 49,
+  "fields": {
+    "student": 14,
+    "subject": 3,
+    "marks": "78.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 50,
+  "fields": {
+    "student": 14,
+    "subject": 4,
+    "marks": "74.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 51,
+  "fields": {
+    "student": 14,
+    "subject": 5,
+    "marks": "71.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 52,
+  "fields": {
+    "student": 14,
+    "subject": 6,
+    "marks": "91.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 53,
+  "fields": {
+    "student": 10,
+    "subject": 1,
+    "marks": "28.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 54,
+  "fields": {
+    "student": 10,
+    "subject": 2,
+    "marks": "40.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 55,
+  "fields": {
+    "student": 10,
+    "subject": 3,
+    "marks": "35.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 56,
+  "fields": {
+    "student": 10,
+    "subject": 4,
+    "marks": "49.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 57,
+  "fields": {
+    "student": 10,
+    "subject": 5,
+    "marks": "31.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 58,
+  "fields": {
+    "student": 10,
+    "subject": 6,
+    "marks": "39.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 59,
+  "fields": {
+    "student": 3,
+    "subject": 1,
+    "marks": "90.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 60,
+  "fields": {
+    "student": 3,
+    "subject": 2,
+    "marks": "85.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 61,
+  "fields": {
+    "student": 3,
+    "subject": 3,
+    "marks": "76.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 62,
+  "fields": {
+    "student": 3,
+    "subject": 4,
+    "marks": "81.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 63,
+  "fields": {
+    "student": 3,
+    "subject": 5,
+    "marks": "95.00"
+  }
+},
+{
+  "model": "students.marks",
+  "pk": 64,
+  "fields": {
+    "student": 3,
+    "subject": 6,
+    "marks": "79.00"
+  }
+}
+]

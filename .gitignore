@@ -1,0 +1,35 @@
+# Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment Variables & Secrets (CRITICAL: Never commit to git)
+.env
+.env.*
+!.env.example
+
+# Bytecode & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Django Generated Artifacts
+*.sqlite3
+db.sqlite3
+staticfiles/
+
+# Logs
+*.log
+
+# Front-end / Node
+node_modules/
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
